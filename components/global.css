@@ -1,0 +1,19 @@
+@font-face {
+    src: url("/fonts/inter.ttf");
+    font-family: 'Inter';
+}
+@font-face {
+    src: url("/fonts/phenomena.otf");
+    font-family: 'Phenomena';
+}
+
+h1,h2,h3,h4,h5,h6,a,li,span{
+    font-family: 'Inter';
+}
+@media only screen and (max-width: 768px){
+
+}
+
+@media only screen and (min-width: 768px){
+
+}

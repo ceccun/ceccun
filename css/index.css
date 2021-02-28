@@ -1,0 +1,29 @@
+.title{
+    background: rgb(0,255,240);
+    background: linear-gradient(90deg, rgba(0,255,240,1) 0%, rgba(75,126,255,1) 29%, rgba(255,0,199,1) 100%);
+    width: fit-content;
+    -webkit-background-clip: text;
+}
+.title > h1 {
+    display: inline;
+    color: transparent;
+    background: linear-gradient(90deg,#000000,#000000,#000000, #000000, transparent, #000000,#000000,#000000,#000000);
+    background-size: 600% 600%;
+    -webkit-background-clip: text;
+    -webkit-animation: titlecolor 5s ease infinite;
+    -moz-animation: titlecolor 5s ease infinite;
+    animation: titlecolor 5s ease infinite;
+}
+
+@-webkit-keyframes titlecolor {
+    0%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes titlecolor {
+    0%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes titlecolor {
+    0%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
