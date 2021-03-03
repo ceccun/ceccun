@@ -14,7 +14,14 @@
     -moz-animation: titlecolor 5s ease infinite;
     animation: titlecolor 5s ease infinite;
 }
-
+@media (prefers-color-scheme: dark) {
+    body{
+        background-color: black;
+    }
+    .title > h1 {
+        color: rgba(255, 255, 255, 0.5);
+    }
+}  
 @-webkit-keyframes titlecolor {
     0%{background-position:100% 50%}
     100%{background-position:0% 50%}
