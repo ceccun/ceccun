@@ -1,36 +1,47 @@
-.title{
-    background: rgb(0,255,240);
-    background: linear-gradient(90deg, rgba(0,255,240,1) 0%, rgba(75,126,255,1) 29%, rgba(255,0,199,1) 100%);
-    width: fit-content;
-    -webkit-background-clip: text;
+@media only screen and (max-width: 768px) {
+  .partnercard {
+    display: flex;
+  }
+  .partnercard > a > img {
+    border-radius: 6px;
+    display: block;
+    width: 80px;
+  }
+  .partnercard > a {
+    padding: 5px;
+    outline: 0;
+  }
+  .partnercard > a:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+  }
+  .partnercard > a:active {
+    transform: scale(0.95);
+    transition: transform 0.2s ease;
+  }
 }
-.title > h1 {
-    display: inline;
-    color: transparent;
-    background: linear-gradient(90deg,#000000,#000000,#000000, #000000, transparent, #000000,#000000,#000000,#000000);
-    background-size: 600% 600%;
-    -webkit-background-clip: text;
-    -webkit-animation: titlecolor 5s ease infinite;
-    -moz-animation: titlecolor 5s ease infinite;
-    animation: titlecolor 5s ease infinite;
-}
-@media (prefers-color-scheme: dark) {
-    body{
-        background-color: black;
-    }
-    .title > h1 {
-        color: rgba(255, 255, 255, 0.5);
-    }
-}  
-@-webkit-keyframes titlecolor {
-    0%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-}
-@-moz-keyframes titlecolor {
-    0%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-}
-@keyframes titlecolor {
-    0%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+
+@media only screen and (min-width: 768px) {
+  .partnercard {
+    display: flex;
+  }
+  .partnercard > a > img {
+    border-radius: 6px;
+    display: block;
+    width: 80px;
+  }
+  .partnercard > a {
+    padding: 5px;
+    transform: scale(1);
+    transition: transform 0.2s ease;
+    outline: 0;
+  }
+  .partnercard > a:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+  }
+  .partnercard > a:active {
+    transform: scale(0.95);
+    transition: transform 0.2s ease;
+  }
 }
