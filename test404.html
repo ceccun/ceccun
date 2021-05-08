@@ -1,0 +1,5 @@
+<script>
+    var path = atob(new URL(window.location) .searchParams.get("recallID"));
+    document.write(path);
+    window.history.replaceState("","",path);
+</script>

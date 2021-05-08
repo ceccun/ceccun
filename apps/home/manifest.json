@@ -1,0 +1,9 @@
+{
+    "appName": "Jango Home for Ceccun",
+    "componentID": "com.ceccun.jango",
+    "publisher": "Ceccun",
+    "icon": ["home.svg"],
+    "description": "The proprietary home screen for Ceccun",
+    "languages": ["en","en-GB","fr","ja","es"],
+    "entryPoint": "index.js"
+}
