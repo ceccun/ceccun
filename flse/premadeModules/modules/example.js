@@ -1,0 +1,1 @@
+return `<div style="width: 300px; height: 150px; background-color: #ededed; padding: 10px; border-radius: 5px;">${element.innerHTML}</div>`

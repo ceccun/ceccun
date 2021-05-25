@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLSE Modules</title>
+    <link href="/css/global.css" rel="stylesheet" />
+</head>
+<body>
+    <p>All the modules on this page were created by Ceccun and are free to use.</p>
+    <h1>1. Time</h1>
+    <example>
+        <p><time></time></p>
+    </example>
+    <p>Just a basic time module, does not tick. <a target="_blank" href="modules/time.js">See Inside</a></p>
+
+    <h1>2. Time (Ticking)</h1>
+    <example>
+        <p><timetick></timetick></p>
+    </example>
+    <p>A time module that ticks. <a target="_blank" href="modules/timeTick.js">See Inside</a></p>
+
+    <h1>3. Counter</h1>
+    <example>
+        <script>window["countNum"] = 0;</script>
+        <p>
+            <count target="countNum"></count>
+        </p>
+        <button onclick="countNum += -1;">-1</button>
+        <button onclick="countNum += 1;">+1</button>
+    </example>
+    <p>A counter that updates in real-time. <a target="_blank" href="modules/count.js">See Inside</a></p>
+
+    <flseimport src="modules/example.js" type="module" name="example" />
+    <flseimport src="modules/time.js" type="module" name="time"/>
+    <flseimport src="modules/timeTick.js" type="module" name="timetick" />
+    <flseimport src="modules/count.js" type="module" name="count" />
+    <script src="https://cdn.jsdelivr.net/gh/stel-la/flse@main/flse.min.js"></script>
+</body>
+</html>
