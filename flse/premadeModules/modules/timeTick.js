@@ -12,4 +12,4 @@ setInterval(() => {
     try { document.getElementById(random).innerHTML = `${hour}:${minute}.${second}`; } catch(error) {}
 }, 100);
 
-return `<div id="${random}">${hour}:${minute}.${second}</div>`;
+try { return `<div id="${random}">${hour}:${minute}.${second}</div>` } catch(error) {};

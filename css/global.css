@@ -3,6 +3,9 @@
   --normal-font: "Inter";
   --body-color: rgba(255, 255, 255, 1);
   --loading-color: rgba(0, 0, 0, 0.1);
+
+  --app-color-modals: rgba(255, 255, 255, 1);
+  --app-color-borders: rgba(0, 0, 0, 0.1);
 }
 
 @font-face {
@@ -29,7 +32,8 @@ h6 {
 }
 p,
 span,
-li {
+li,
+input {
   font-family: var(--normal-font), sans-serif;
 }
 

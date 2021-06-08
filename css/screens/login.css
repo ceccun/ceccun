@@ -1,0 +1,69 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.login-backg {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  background-color: black;
+}
+
+/* .login-modal {
+  background-color: var(--app-color-modals);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 10px;
+  border-radius: 7px;
+  transform: translate(-50%, -50%);
+} */
+.login-modal-inner > p {
+  font-size: 20px;
+}
+.login-modal-inner > input {
+  padding: 10px;
+  width: 300px;
+  font-size: 1.05rem;
+  border-radius: 5px;
+  border: var(--app-color-borders) 2px solid;
+}
+.login-modal-inner > .text-small {
+  font-size: 14px;
+  opacity: 0.5;
+  margin-bottom: 0px;
+}
+.login-modal {
+  background-color: var(--app-color-modals);
+  position: absolute;
+  height: 100vh;
+}
+
+.login-modal-inner {
+  padding-top: 70px;
+  padding-left: 70px;
+  padding-right: 70px;
+}
+
+.login-modal-b-zone {
+  opacity: 0.4;
+  font-size: 14px;
+}
+
+@media only screen and (max-width: 768px) {
+  .login-modal {
+    width: 100%;
+  }
+  .login-modal-inner {
+    padding-top: 60px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  .login-modal-inner > input {
+    width: calc(100% - 24px);
+  }
+}
+
+@media only screen and (min-width: 769px) {
+}
