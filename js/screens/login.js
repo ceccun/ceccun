@@ -26,3 +26,14 @@ flsestrings["password"] = {
     "es": "Contraseña",
     "it": "Parola d'ordine"
 }
+
+const loginScrLogin = () => {
+    const email = document.getElementById("email-input").value;
+    const password = document.getElementById("password-input").value;
+    fetch("https://api.ceccun.com/api/v1/login", {
+        "body": JSON.stringify({
+            "email": email,
+            "password": password
+        })
+    })
+}

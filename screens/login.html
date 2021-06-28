@@ -18,10 +18,12 @@
                 <h1 flsestring="hello">Hello,</h1>
 
                 <p class="text-small" flsestring="emailadd">Email Address</p>
-                <input type="email" />
+                <input id="email-input" type="email" />
 
                 <p class="text-small" flsestring="password">Password</p>
-                <input type="password" />
+                <input id="password-input" type="password" />
+
+                <buttons><p flsestring="signin"></p></buttons>
 
                 <div class="login-modal-b-zone">
                     <p flsestring="copyright"></p>
@@ -30,9 +32,10 @@
         </div>
     </div>
 
+    <flseimport src="/js/modules/buttons.js" name="buttons" type="module" />
     <script src="/js/global.js"></script>
     <script src="/js/screens/login.js"></script>
-    <script src="https://stella.hs.vc/flse/flse.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/stel-la/flse@main/flse.min.js"></script>
 </body>
 
 </html>

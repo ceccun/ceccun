@@ -3,7 +3,10 @@
   --normal-font: "Inter";
   --body-color: rgba(255, 255, 255, 1);
   --loading-color: rgba(0, 0, 0, 0.1);
-
+  --button-color: rgb(52, 147, 255);
+  --button-color-hov: rgb(12, 115, 233);
+  --button-text-color: rgba(255, 255, 255, 1);
+  --button-radius: 5px;
   --app-color-modals: rgba(255, 255, 255, 1);
   --app-color-borders: rgba(0, 0, 0, 0.1);
 }

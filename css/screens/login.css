@@ -24,9 +24,8 @@ body {
 }
 .login-modal-inner > input {
   padding: 10px;
-  width: 300px;
   font-size: 1.05rem;
-  border-radius: 5px;
+  border-radius: var(--button-radius);
   border: var(--app-color-borders) 2px solid;
 }
 .login-modal-inner > .text-small {
@@ -66,4 +65,7 @@ body {
 }
 
 @media only screen and (min-width: 769px) {
+  .login-modal-inner > input {
+    width: 300px;
+  }
 }
