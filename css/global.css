@@ -6,6 +6,8 @@
   --button-color: rgb(52, 147, 255);
   --button-color-hov: rgb(12, 115, 233);
   --button-text-color: rgba(255, 255, 255, 1);
+  --button-unavailable: rgba(0, 0, 0, 0.274);
+  --error-color: rgb(255, 44, 44);
   --button-radius: 5px;
   --app-color-modals: rgba(255, 255, 255, 1);
   --app-color-borders: rgba(0, 0, 0, 0.1);
@@ -55,4 +57,8 @@ input {
 
 .loading {
   background-color: var(--loading-color);
+}
+
+trn {
+  display: none;
 }

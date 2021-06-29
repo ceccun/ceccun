@@ -26,14 +26,42 @@ flsestrings["password"] = {
     "es": "Contraseña",
     "it": "Parola d'ordine"
 }
+flsestrings["incorrect"] = {
+    "default": "Sorry! That didn't work.",
+    "ja": "ごめんなさい！ クレデンシャルが正しくありません。",
+    "fr": "Pardon! Identifiants incorrects.",
+    "es": "Contraseña o correo electrónico incorrecto.",
+    "it": "Scusa! Non ha funzionato. "
+}
 
 const loginScrLogin = () => {
     const email = document.getElementById("email-input").value;
     const password = document.getElementById("password-input").value;
+    document.getElementById("login-btn").setAttribute("style", "background-color: var(--button-unavailable); transition: none;");
     fetch("https://api.ceccun.com/api/v1/login", {
+        "method": "POST",
         "body": JSON.stringify({
             "email": email,
             "password": password
         })
+    }).then((response) => {
+
+        if (response.status == 200) {
+            response.json().then((data) => {
+                if (data["error"] == "1") {
+                    const ls = window.localStorage;
+                    ls.setItem("authenticationToken", data["authentication"]);
+                    // window.location.href = "/screens/loginaf.html";
+                } else {
+                    document.getElementById("login-btn").setAttribute("style", "z-index: 1;");
+                    document.getElementById("error-msg").setAttribute("style", "");
+                    document.getElementById("error-msg").setAttribute("class", "error-type");
+                }
+            })
+        }
     })
+}
+
+const loginError = (error) => {
+    document.getElementById("")
 }

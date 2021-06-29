@@ -1,6 +1,6 @@
 const randomID = "btn_" + Math.random().toString(27).substring(7);
 
-return `<div onClick="${element.getAttribute("onClick")}" class="${randomID}">
+return `<div style="${element.getAttribute("style")}" id="${element.getAttribute("id")}" onClick="${element.getAttribute("onclick")}" class="${randomID}">
     ${element.innerHTML}
 
     <style>
