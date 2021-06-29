@@ -34,6 +34,8 @@ flsestrings["incorrect"] = {
     "it": "Scusa! Non ha funzionato. "
 }
 
+let redirect = new URL(window.location).searchParams.get("redirect");
+
 const loginScrLogin = () => {
     const email = document.getElementById("email-input").value;
     const password = document.getElementById("password-input").value;
@@ -51,7 +53,7 @@ const loginScrLogin = () => {
                 if (data["error"] == "1") {
                     const ls = window.localStorage;
                     ls.setItem("authenticationToken", data["authentication"]);
-                    // window.location.href = "/screens/loginaf.html";
+                    window.location.href = `/screens/loginaf.html?redirect=${atob(redirect)}`
                 } else {
                     document.getElementById("login-btn").setAttribute("style", "z-index: 1;");
                     document.getElementById("error-msg").setAttribute("style", "");
