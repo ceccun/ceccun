@@ -26,6 +26,12 @@ img {
   border-radius: 7px;
   transform: translate(-50%, -50%);
 } */
+
+.error-input {
+  border: var(--error-color) 2px solid !important;
+  transition: border 0.1s ease;
+}
+
 .login-modal-inner > p {
   font-size: 20px;
 }
@@ -81,6 +87,28 @@ buttons {
   100% {
     margin-bottom: 0px;
     opacity: 1;
+  }
+}
+
+.error-closed {
+  color: var(--error-color);
+  font-size: 14px !important;
+  z-index: -1;
+  transform: translateZ(0);
+  animation: errorSwingClose 0.3s ease;
+}
+
+@keyframes errorSwingClose {
+  0% {
+    margin-bottom: 0px;
+    opacity: 1;
+  }
+  99% {
+    margin-bottom: -30px;
+    opacity: 0;
+  }
+  100% {
+    display: none;
   }
 }
 

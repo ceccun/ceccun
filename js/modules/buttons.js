@@ -12,18 +12,36 @@ return `<div style="${element.getAttribute("style")}" id="${element.getAttribute
             width: 100%;
             border-radius: var(--button-radius);
             border: var(--app-color-borders) 2px solid;
-            transition: background-color 0.1s ease;
             cursor: pointer;
-        }
-
-        .${randomID}:hover {
-            background-color: var(--button-color-hov);
+            -webkit-tap-highlight-color:  rgba(255, 255, 255, 0) !important;
         }
 
         .${randomID} > p {
             color: var(--button-text-color);
             margin: 0;
             user-select: none;
+        }
+
+        @media only screen and (min-width: 769px) {
+
+            .${randomID} {
+                transition: background-color 0.1s ease;
+            }
+            .${randomID}:hover {
+                background-color: var(--button-color-hov);
+            }
+        }
+
+        @media only screen and (max-width: 768px) {
+            .${randomID} {
+            background-color: var(--button-color);
+            transform: scale(1);
+            -webkit-tap-highlight-color:  rgba(255, 255, 255, 0) !important;
+            transition: transform 0.1s ease;
+            }
+            .${randomID}:active {
+                transform: scale(0.95);
+            }
         }
     </style>
 </div>`;

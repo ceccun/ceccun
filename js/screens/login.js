@@ -37,17 +37,33 @@ flsestrings["incorrect"] = {
 let redirect = new URL(window.location).searchParams.get("redirect");
 
 const loginScrLogin = () => {
+    var error = 0;
+    resetAll();
+
     const email = document.getElementById("email-input").value;
     const password = document.getElementById("password-input").value;
     if (email.trim().length == 0) {
-        document.getElementById("error-msg-no-email").setAttribute("style", "");
-        document.getElementById("error-msg-no-email").setAttribute("class", "error-type");
+        errorForm("error-msg-no-email");
+        document.getElementById("email-input").setAttribute("class", "error-input");
+        error = 1;
     }
     if (password.trim().length == 0) {
-        document.getElementById("error-msg-no-password").setAttribute("style", "");
-        document.getElementById("error-msg-no-password").setAttribute("class", "error-type");
+        errorForm("error-msg-no-password");
+        document.getElementById("password-input").setAttribute("class", "error-input");
+        error = 1;
     }
-    console.log(checkNetwork());
+    console.log(networkConnection);
+    if (networkConnection == false) {
+        document.getElementById("login-btn").setAttribute("style", "z-index: 1;");
+        document.getElementById("error-msg-no-work").setAttribute("flsestring", "nointernet");
+        errorForm("error-msg-no-work");
+        error = 1;
+    } else {
+        document.getElementById("error-msg-no-work").setAttribute("flsestring", "incorrect");
+    }
+    if (error == 1) {
+        return;
+    }
     document.getElementById("login-btn").setAttribute("style", "background-color: var(--button-unavailable); transition: none;");
     fetch("https://api.ceccun.com/api/v1/login", {
         "method": "POST",
@@ -71,6 +87,26 @@ const loginScrLogin = () => {
             })
         }
     })
+}
+
+
+const errorForm = (errorElement) => {
+    document.getElementById(errorElement).setAttribute("style", "");
+    document.getElementById(errorElement).setAttribute("class", "error-type");
+}
+
+const resetAll = () => {
+    document.getElementById("error-msg-no-email").setAttribute("class", "");
+    document.getElementById("error-msg-no-email").setAttribute("style", "display: none;");
+    document.getElementById("email-input").setAttribute("class", "");
+
+    document.getElementById("error-msg-no-password").setAttribute("class", "");
+    document.getElementById("error-msg-no-password").setAttribute("style", "display: none;");
+    document.getElementById("password-input").setAttribute("class", "");
+
+    document.getElementById("error-msg-no-work").setAttribute("class", "");
+    document.getElementById("error-msg-no-work").setAttribute("style", "display: none;");
+    document.getElementById("error-msg-no-work").setAttribute("flsestring", "incorrect");
 }
 
 const loginError = (error) => {

@@ -16,18 +16,38 @@ flsestrings["fieldrequired"] = {
     "it": "Il campo di inserimento non può essere lasciato vuoto."
 }
 
-const checkNetwork = () => {
-    fetch("https://api.ceccun.com/cdynamic/captive")
-    .then((response) => {
+var networkConnection = false;
 
-        if (response.status == 200) {
-            response.json().then((data) => {
-                if (data["error"] == "1") {
-                    return true;
-                } else {
-                    return false;
-                }
-            })
-        }
-    })
+const checkNetConnection = () => {
+    try{
+        fetch("https://api.ceccun.com/cdynamic/captive")
+        .then((response) => {
+
+            if (response.status == 200) {
+                response.json().then((data) => {
+                    if (data["error"] == "1") {
+                        networkConnection = true;
+                        return;
+                    } else {
+                        networkConnection = false;
+                        return;
+                    }
+                })
+            } else {
+                networkConnection = false;
+                return;
+            }
+        }).catch(() => {
+            networkConnection = false;
+            return;
+        })
+    } catch(error) {
+        networkConnection = false;
+    }
 }
+
+checkNetConnection();
+
+setInterval(() => {
+        checkNetConnection();
+    }, 5000);
