@@ -69,6 +69,10 @@ body {
   }
 }
 
+.login-button {
+  width: calc(100% - 4px) !important;
+}
+
 @media only screen and (max-width: 768px) {
   .login-modal {
     width: 100%;

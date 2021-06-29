@@ -39,6 +39,7 @@ let redirect = new URL(window.location).searchParams.get("redirect");
 const loginScrLogin = () => {
     const email = document.getElementById("email-input").value;
     const password = document.getElementById("password-input").value;
+    console.log(checkNetwork());
     document.getElementById("login-btn").setAttribute("style", "background-color: var(--button-unavailable); transition: none;");
     fetch("https://api.ceccun.com/api/v1/login", {
         "method": "POST",
