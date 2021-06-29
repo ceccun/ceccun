@@ -17,21 +17,17 @@ flsestrings["fieldrequired"] = {
 }
 
 const checkNetwork = () => {
-    const networkRequest = new XMLHttpRequest();
-    networkRequest.open("GET","https://api.ceccun.com/cdynamic/captive", async=false);
-    networkRequest.onreadystatechange = function (e) {
-        if ((this.status == 200) && (this.readyState == 4)) {
-            try{
-            response = JSON.parse(this.responseText);
-            if (response["error"] == "1"){
-                if ("content" in response) {
+    fetch("https://api.ceccun.com/cdynamic/captive")
+    .then((response) => {
+
+        if (response.status == 200) {
+            response.json().then((data) => {
+                if (data["error"] == "1") {
                     return true;
+                } else {
+                    return false;
                 }
-            }
-            }
-            catch (error) {
-                return false;
-            }
+            })
         }
-    }
+    })
 }

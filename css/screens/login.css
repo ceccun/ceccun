@@ -8,8 +8,15 @@ body {
   height: 100vh;
   margin: 0;
   background-color: black;
+  /* background-image: url(https://source.unsplash.com/user/erondu/1600x900); */
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
+img {
+  pointer-events: none;
+}
 /* .login-modal {
   background-color: var(--app-color-modals);
   position: absolute;
@@ -33,10 +40,24 @@ body {
   opacity: 0.5;
   margin-bottom: 0px;
 }
+
 .login-modal {
-  background-color: var(--app-color-modals);
+  background-color: var(--body-color);
   position: absolute;
   height: 100vh;
+}
+
+buttons {
+  display: none;
+}
+
+@supports (
+  (-webkit-backdrop-filter: blur(5px)) or (backdrop-filter: blur(5px))
+) {
+  .login-modal {
+    background-color: var(--body-color-light);
+    backdrop-filter: blur(5px);
+  }
 }
 
 .login-modal-b-zone {
@@ -89,9 +110,10 @@ body {
     padding-bottom: 70px;
   }
   .login-modal-inner > input {
-    width: 300px;
+    width: calc(100% - 24px);
   }
   .login-modal {
+    width: 464px;
     overflow-y: auto;
   }
 }
