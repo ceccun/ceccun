@@ -22,12 +22,16 @@
                 <p class="text-small" flsestring="emailadd">Email Address</p>
                 <input id="email-input" type="email" />
 
+                <p id="error-msg-no-email" style="display: none;" flsestring="fieldrequired">Sorry! That didn't work.</p>
+
                 <p class="text-small" flsestring="password">Password</p>
                 <input id="password-input" type="password" />
 
-                <p id="error-msg-no-work" style="display: none;" flsestring="incorrect">Sorry! That didn't work.</p>
+                <p id="error-msg-no-password" style="display: none;" flsestring="fieldrequired">Sorry! That didn't work.</p>
 
                 <buttons class="login-button" id="login-btn" onclick="loginScrLogin();"><p flsestring="signin"></p></buttons>
+
+                <p id="error-msg-no-work" style="display: none;" flsestring="incorrect">Sorry! That didn't work.</p>
 
                 <div class="login-modal-b-zone">
                     <p flsestring="copyright"></p>

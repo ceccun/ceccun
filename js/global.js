@@ -11,6 +11,10 @@ flsestrings["nointernet"] = {
     "fr": "Pas de connexion Internet.",
     "it": "Nessuna connessione internet."
 }
+flsestrings["fieldrequired"] = {
+    "default": "Field cannot be left empty.",
+    "it": "Il campo di inserimento non può essere lasciato vuoto."
+}
 
 const checkNetwork = () => {
     const networkRequest = new XMLHttpRequest();
