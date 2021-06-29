@@ -56,8 +56,8 @@ const loginScrLogin = () => {
                     window.location.href = `/screens/loginaf.html?redirect=${atob(redirect)}`
                 } else {
                     document.getElementById("login-btn").setAttribute("style", "z-index: 1;");
-                    document.getElementById("error-msg").setAttribute("style", "");
-                    document.getElementById("error-msg").setAttribute("class", "error-type");
+                    document.getElementById("error-msg-no-work").setAttribute("style", "");
+                    document.getElementById("error-msg-no-work").setAttribute("class", "error-type");
                 }
             })
         }
