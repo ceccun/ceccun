@@ -84,7 +84,24 @@ trn {
 }
 
 .skel {
-  background-color: var(--skel-color);
+  /* background-color: var(--skel-color); */
   border-radius: 5px;
   margin-bottom: 5px;
+  background: linear-gradient(
+    90deg,
+    var(--skel-color) 25%,
+    var(--body-color) 50%,
+    var(--skel-color) 100%
+  );
+  animation: skel 1.5s linear infinite;
+  background-size: 300% 300%;
+}
+
+@keyframes skel {
+  0% {
+    background-position: 200% 0%;
+  }
+  100% {
+    background-position: -200% 0%;
+  }
 }
