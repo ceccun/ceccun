@@ -3,11 +3,14 @@
   --normal-font: "Inter";
   --body-color: rgba(255, 255, 255, 1);
   --body-color-light: rgba(255, 255, 255, 0.8);
+  --button-color-gray: rgba(0, 0, 0, 0.116);
+  --button-color-gray-hov: rgba(0, 0, 0, 0.226);
   --loading-color: rgba(0, 0, 0, 0.1);
   --button-color: rgb(52, 147, 255);
   --button-color-hov: rgb(12, 115, 233);
   --button-text-color: rgba(255, 255, 255, 1);
   --button-unavailable: rgba(0, 0, 0, 0.274);
+  --skel-color: rgba(0, 0, 0, 0.068);
   --error-color: rgb(255, 44, 44);
   --button-radius: 5px;
   --app-color-modals: rgba(255, 255, 255, 1);
@@ -62,4 +65,26 @@ input {
 
 trn {
   display: none;
+}
+
+.loading-spinner {
+  animation: spinning 0.7s linear infinite;
+}
+
+@keyframes spinning {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.skel {
+  background-color: var(--skel-color);
+  border-radius: 5px;
+  margin-bottom: 5px;
 }

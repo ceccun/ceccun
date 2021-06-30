@@ -1,0 +1,20 @@
+{
+    "name": "Notes",
+    "package": "com.ceccun.notes",
+    "entryPoint": "/apps/com.ceccun.notes/index.js",
+    "icon": "/images/edit-2.svg",
+    "flse": [{
+        "name": "trn",
+        "src": "/js/modules/trainerBlocks.js",
+        "type": "module"
+    },
+    {
+        "name": "header",
+        "src": "/js/modules/header.js",
+        "type": "module"
+    },
+    {
+        "src": "/apps/com.ceccun.notes/notesskel.json",
+        "type": "components"
+    }]
+}

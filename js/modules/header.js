@@ -1,21 +1,23 @@
 return `<div class="main-header">
-    <div>
-    <p>Notes</p>
-    </div>
-</div>
-
-<div class="mob-header">
 
 </div>
+
 <style>
-.main-header {
-    display: flex;
-    justify-space: space-between;
-    background-color: 
+@media only screen and (min-width: 769px) {
+    .main-header {
+        width: 100%;
+        height: 50px;
+        top:0;
+        left:0;
+        position: fixed;
+        background-color: red;
+        display: flex;
+        
+    }
 }
-
-.main-header p {
-    font-size: 17px;
-    margin: 10px 10px 10px 10px;
+@media only screen and (max-width: 768px) {
+    .main-header {
+        display: none;
+    }
 }
 </style>`
