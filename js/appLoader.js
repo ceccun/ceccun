@@ -16,7 +16,7 @@ fetch(`/apps/${targetApp}/manifest.json`)
             `;
             setTimeout(() => {
             loadApp(manifest);
-            }, 1500)
+            }, 500)
         });
     } else {
             document.getElementsByClassName("app-splash")[0].innerHTML = `

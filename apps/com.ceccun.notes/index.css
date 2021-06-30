@@ -60,6 +60,11 @@ body {
     height: 20px;
     margin-right: 10px;
   }
+  .rs-notes > .item > img {
+    vertical-align: top;
+    display: inline-block;
+    height: 20px;
+  }
 }
 
 .skel-item {
