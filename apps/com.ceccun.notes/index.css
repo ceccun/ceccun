@@ -7,10 +7,56 @@ body {
   /* background-color: rgb(218, 218, 218); */
 }
 
+.skel-item {
+  background-color: var(--body-color);
+  border: solid 2px var(--app-color-borders);
+}
+
 @media only screen and (max-width: 768px) {
   .main {
     width: 100%;
     height: 100vh;
+  }
+  .ls-notes {
+    width: 100%;
+  }
+  .rs-notes {
+    width: 100%;
+    height: 10vh;
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    display: flex;
+    justify-content: space-around;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+  }
+  .rs-notes > .item {
+    background-color: var(--button-color-gray);
+    padding: 10px;
+    position: relative;
+    bottom: 20px;
+    border-radius: 25px;
+    margin-bottom: 5px;
+    transition: background-color 0.1s ease;
+    height: 20px;
+    overflow-y: hidden;
+  }
+  .rs-notes > .item > img {
+    vertical-align: top;
+    display: inline-block;
+    height: 20px;
+  }
+  .rs-notes > .item > p {
+    display: none;
+  }
+  .skel-item {
+    width: 100%;
+    border-left: 0;
+    border-right: 0;
   }
 }
 
@@ -44,6 +90,8 @@ body {
     border-radius: 25px;
     margin-bottom: 5px;
     transition: background-color 0.1s ease;
+    height: 20px;
+    overflow-y: hidden;
   }
   .rs-notes > .item:hover {
     background-color: var(--button-color-gray-hov);
@@ -53,29 +101,29 @@ body {
     pointer-events: none;
     user-select: none;
     white-space: unset;
-  }
-  .rs-notes > .item > p > img {
-    vertical-align: top;
+    margin-left: 10px;
     display: inline-block;
-    height: 20px;
-    margin-right: 10px;
+  }
+
+  @media only screen and (max-width: 1340px) {
+    .rs-notes > .item > p {
+      display: none;
+    }
   }
   .rs-notes > .item > img {
     vertical-align: top;
     display: inline-block;
     height: 20px;
   }
+  .skel-item {
+    width: 600px;
+    border-radius: 10px;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    /* max-width: 525px; */
+  }
 }
 
-.skel-item {
-  width: 600px;
-  background-color: var(--body-color);
-  border: solid 2px var(--app-color-borders);
-  border-radius: 10px;
-  margin-top: -10px;
-  margin-bottom: 20px;
-  /* max-width: 525px; */
-}
 .skel-item-inner {
   margin: 25px;
   /* padding-top: 25px;
