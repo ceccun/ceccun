@@ -77,7 +77,7 @@ const loginScrLogin = () => {
             response.json().then((data) => {
                 if (data["error"] == "1") {
                     const ls = window.localStorage;
-                    ls.setItem("authenticationToken", data["authentication"]);
+                    ls.setItem("token", data["authentication"]);
                     window.location.href = `/screens/loginaf.html?redirect=${atob(redirect)}`
                 } else {
                     document.getElementById("login-btn").setAttribute("style", "z-index: 1;");
