@@ -11,7 +11,7 @@ body {
   transition: all 0.3s ease !important;
 }
 
-.skel-item {
+.note-item {
   background-color: var(--body-color);
   border: solid 2px var(--app-color-borders);
 }
@@ -28,7 +28,7 @@ body {
     width: 100%;
     height: 100vh;
   }
-  .skel-item {
+  .note-item {
     background-color: var(--body-color);
     border: solid 1px var(--app-color-borders);
   }
@@ -70,7 +70,7 @@ body {
     margin: 0;
     margin-left: 10px;
   }
-  .skel-item {
+  .note-item {
     width: 100%;
     border-left: 0;
     border-right: 0;
@@ -174,7 +174,7 @@ body {
     display: inline-block;
     height: 20px;
   }
-  .skel-item {
+  .note-item {
     width: 600px;
     border-radius: 10px;
     margin-top: -10px;
@@ -183,7 +183,7 @@ body {
   }
 }
 
-.skel-item-inner {
+.note-item-inner {
   margin: 25px;
   /* padding-top: 25px;
   padding-bottom: 25px; */

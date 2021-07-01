@@ -16,39 +16,43 @@ const entry = () => {
 }
 
 const loadNotes = () => {
+    downloadNotesList(0)
+}
+
+
+const downloadNotesList = (batchNum) => {
     const ls = window.localStorage;
-    fetch("https://api.ceccun.com/api/v1/notes", {
-        "headers": { 
-            "authorization": ls.getItem("token") 
+    fetch(`https://api.ceccun.com/api/v1/notes?batch=${batchNum}`, {
+        "headers": {
+            "authorization": ls.getItem("token"),
         }
-    }).then((response) => {
+    })
+    .then ((response) => {
         if (response.status == 200) {
-            response.json().then((notes) => {
-                noteID = notes["content"];
-                console.log(noteID);
-                for (const item in noteID) {
-                    const noteIdentity = noteID[item]
-                    fetch(`https://api.ceccun.com/api/v1/notes/${noteIdentity}`, {
-                        "headers": {
-                             "authorization": ls.getItem("token") 
+            response.json().then((notesList) => {
+                notesListContents = notesList["content"];
+                var count = 0
+                for (const item of notesListContents) {
+
+                    fetch(`https://api.ceccun.com/api/v1/notes/${item}`, {
+                        headers: {
+                            "authorization": ls.getItem("token")
                         }
                     }).then((response) => {
-                        if (response.status == 200) {
-                            response.json().then((data) => {
-                                console.log(data)
-                                try {
-                                    document.getElementsByClassName("skel-item-inner")[item].innerHTML = `<p>${data["content"]["note"]}</p>`
-                                } catch (error) {
-                                    var newElem = document.createElement("div");
-                                    newElem.setAttribute("class", "skel-item");
-                                    newElem.innerHTML = `<div class='skel-item-inner'><p>${data["content"]["note"]}</p></div>`;
-                                    document.getElementsByClassName("ls-notes")[0].appendChild(newElem);
-                                }
-                            })
-                        }
+                        
                     })
                 }
             })
         }
     })
+}
+
+
+const addInLoader = () => {
+    const stillLoading = document.getElementsByClassName("loading-state");
+    for (const loadingEL of stillLoading) {
+        loadingEL.remove();
+    }
+    var loadingElem = document.createElement("skelNote");
+    document.getElementsByClassName("ls-notes")[0].appendChild(loadingElem);
 }
