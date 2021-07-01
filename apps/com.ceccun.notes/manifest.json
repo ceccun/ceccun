@@ -2,7 +2,7 @@
     "name": "Notes",
     "package": "com.ceccun.notes",
     "entryPoint": "/apps/com.ceccun.notes/index.js",
-    "icon": "/images/edit-2.svg",
+    "icon": "/images/notes.svg",
     "flse": [{
         "name": "trn",
         "src": "/js/modules/trainerBlocks.js",
