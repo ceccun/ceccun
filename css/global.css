@@ -2,6 +2,7 @@
   --big-font: "Eudoxus Sans";
   --normal-font: "Inter";
   --body-color: rgba(255, 255, 255, 1);
+  --text-color: rgba(0, 0, 0, 1);
   --body-color-light: rgba(255, 255, 255, 0.8);
   --button-color-gray: rgba(0, 0, 0, 0.116);
   --button-color-gray-hov: rgba(0, 0, 0, 0.226);
@@ -15,6 +16,29 @@
   --button-radius: 5px;
   --app-color-modals: rgba(255, 255, 255, 1);
   --app-color-borders: rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --big-font: "Eudoxus Sans";
+    --normal-font: "Inter";
+    --body-color: rgb(0, 0, 0);
+    --text-color: rgba(255, 255, 255, 1);
+    --body-color-light: rgba(0, 0, 0, 0.8);
+    --button-color-gray: rgba(255, 255, 255, 0.116);
+    --button-color-gray-hov: rgba(255, 255, 255, 0.226);
+    --loading-color: rgba(255, 255, 255, 0.1);
+    --button-color: rgb(52, 147, 255);
+    --button-color-hov: rgb(12, 115, 233);
+    --button-text-color: rgba(255, 255, 255, 1);
+    --button-unavailable: rgba(0, 0, 0, 0.274);
+    --skel-color: rgba(255, 255, 255, 0.068);
+    --error-color: rgb(255, 44, 44);
+    --button-radius: 5px;
+    --app-color-modals: rgba(255, 255, 255, 1);
+    --app-color-borders: rgba(255, 255, 255, 0.1);
+    --invert-icon: invert();
+  }
 }
 
 @font-face {
@@ -38,12 +62,14 @@ h5,
 h6 {
   font-family: var(--big-font), sans-serif;
   font-weight: 700;
+  color: var(--text-color);
 }
 p,
 span,
 li,
 input {
   font-family: var(--normal-font), sans-serif;
+  color: var(--text-color);
 }
 
 @media only screen and (max-width: 769px) {
@@ -61,6 +87,10 @@ input {
 
 .loading {
   background-color: var(--loading-color);
+}
+
+body {
+  background-color: var(--body-color);
 }
 
 trn {
