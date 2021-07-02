@@ -118,20 +118,20 @@ trn {
   border-radius: 5px;
   margin-bottom: 5px;
   background: linear-gradient(
-    90deg,
+    270deg,
     var(--skel-color) 25%,
     var(--body-color) 50%,
-    var(--skel-color) 100%
+    var(--skel-color) 75%
   );
-  animation: skel 1.5s linear infinite;
+  animation: skel 1s linear infinite;
   background-size: 300% 300%;
 }
 
 @keyframes skel {
   0% {
-    background-position: 200% 0%;
+    background-position: 100% 50%;
   }
   100% {
-    background-position: -200% 0%;
+    background-position: 0% 50%;
   }
 }
