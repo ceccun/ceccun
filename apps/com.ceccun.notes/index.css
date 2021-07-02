@@ -16,6 +16,10 @@ body {
   border: solid 2px var(--app-color-borders);
 }
 
+.note-item-inner > p {
+  word-wrap: break-word;
+}
+
 .rs-notes > .item > img {
   filter: var(--invert-icon);
 }
