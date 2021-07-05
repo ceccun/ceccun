@@ -71,17 +71,18 @@ const downloadNotesList = (batchNumber) => {
                                     innerElem.appendChild(newPElem);
 
                                     try {
-                                        document.getElementsByClassName("loading-state")[item].innerHTML = "";
-                                        document.getElementsByClassName("loading-state")[item].appendChild(innerElem);
+                                        document.getElementsByClassName("loading-state")[0].innerHTML = "";
+                                        document.getElementsByClassName("loading-state")[0].appendChild(innerElem);
+                                        document.getElementsByClassName("loading-state")[0].setAttribute("onclick", `() => { openNote("${notesListContents[item]}"); }`)
+                                        document.getElementsByClassName("loading-state")[0].setAttribute("class", "note-item selectable");
                                         
                                     } catch (error) {
                                         var outerElem = document.createElement('div');
-                                        outerElem.setAttribute("class", "note-item");
+                                        outerElem.setAttribute("class", "note-item selectable");
+                                        outerElem.setAttribute("onclick", `() => { openNote("${notesListContents[item]}"); }`);
                                         outerElem.appendChild(innerElem);
                                         document.getElementsByClassName("ls-notes")[0].appendChild(outerElem);
-                                        
                                     }
-                                    console.log("hello")
                                     count += 1;
                                 })
                             }
@@ -136,3 +137,7 @@ document.addEventListener("scroll", (e) => {
         }
     }
 })
+
+const openNotes = (noteNumber) => {
+    console.log(noteNumber);
+}

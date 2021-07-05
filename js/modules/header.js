@@ -10,9 +10,10 @@ return `<div class="main-header">
         top:0;
         left:0;
         position: fixed;
-        background-color: red;
+        background-color: var(--body-color);
         display: flex;
         z-index: 100;
+        border-bottom: solid 2px var(--app-color-borders);
     }
 }
 @media only screen and (max-width: 768px) {
