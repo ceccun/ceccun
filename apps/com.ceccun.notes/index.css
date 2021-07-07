@@ -31,6 +31,7 @@ body {
     position: fixed;
     top: 0;
     animation: openCurrentScreen 0.3s ease;
+    transform: translateZ(0);
   }
   @keyframes openCurrentScreen {
     0% {
