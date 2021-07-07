@@ -1,4 +1,5 @@
-var currentSection = "notes"
+var currentSection = "notes";
+var currentNote = null;
 var batchNum = {
     "notes": 0,
     "flashcards": 0
@@ -14,11 +15,16 @@ const entry = () => {
                 document.body.appendChild(appElement);
                 showApp();
                 loadNotes();
+                document.getElementsByClassName("screen-background")[0].addEventListener("click", saveAndCloseNote);
             });
         } else {
 
         }
     })
+}
+
+const saveAndCloseNote = () => {
+    document.getElementsByClassName("write-new-note-screen")[0].remove();
 }
 
 const loadNotes = () => {

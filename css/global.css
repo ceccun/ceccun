@@ -67,7 +67,8 @@ h6 {
 p,
 span,
 li,
-input {
+input,
+div {
   font-family: var(--normal-font), sans-serif;
   color: var(--text-color);
 }
