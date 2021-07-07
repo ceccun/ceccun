@@ -1,5 +1,9 @@
 var currentSection = "notes";
-var currentNote = null;
+var currentNote = {
+    "note": null,
+    "loaded": 0,
+    "lastState": 0
+}
 var batchNum = {
     "notes": 0,
     "flashcards": 0
@@ -15,8 +19,7 @@ const entry = () => {
                 document.body.appendChild(appElement);
                 showApp();
                 loadNotes();
-                document.getElementsByClassName("screen-background")[0].addEventListener("click", saveAndCloseNote);
-            });
+            })
         } else {
 
         }
@@ -79,13 +82,13 @@ const downloadNotesList = (batchNumber) => {
                                     try {
                                         document.getElementsByClassName("loading-state")[0].innerHTML = "";
                                         document.getElementsByClassName("loading-state")[0].appendChild(innerElem);
-                                        document.getElementsByClassName("loading-state")[0].setAttribute("onclick", `() => { openNote("${notesListContents[item]}"); }`)
+                                        document.getElementsByClassName("loading-state")[0].setAttribute("onclick", `openNotes("${notesListContents[item]}")`)
                                         document.getElementsByClassName("loading-state")[0].setAttribute("class", "note-item selectable");
                                         
                                     } catch (error) {
                                         var outerElem = document.createElement('div');
                                         outerElem.setAttribute("class", "note-item selectable");
-                                        outerElem.setAttribute("onclick", `() => { openNote("${notesListContents[item]}"); }`);
+                                        outerElem.setAttribute("onclick", `openNotes("${notesListContents[item]}")`);
                                         outerElem.appendChild(innerElem);
                                         document.getElementsByClassName("ls-notes")[0].appendChild(outerElem);
                                     }
@@ -145,5 +148,40 @@ document.addEventListener("scroll", (e) => {
 })
 
 const openNotes = (noteNumber) => {
-    console.log(noteNumber);
+    const ls = window.localStorage;
+
+    var noteTypeElem = document.createElement('div');
+    noteTypeElem.setAttribute("class", "write-new-note-screen current-screen");
+    noteTypeElem.innerHTML = `
+    <div class="screen-background"></div>
+    <div class="popup">
+        <div class="new-note-header">
+            <div onclick="saveAndCloseNote()">
+                <img src="/images/chevron.svg"/>
+                <trn>
+                    <div><p>Close Note</p></div>
+                    <div></div>
+                </trn>
+            </div>
+        </div>
+        <div class="note-outer">
+            <div class="note-typing">
+                <skel />
+            </div>
+        </div>
+    </div>`;
+    document.body.appendChild(noteTypeElem);
+    document.getElementsByClassName("screen-background")[0].addEventListener("click", saveAndCloseNote);
+    fetch(`https://api.ceccun.com/api/v1/notes/${noteNumber}`, {
+        "headers": { 
+            "authorization": ls.getItem("token")
+         }
+    }).then((response) => {
+        if (response.status == 200) {
+            response.json().then((data) => {
+                document.getElementsByClassName("note-typing")[0].innerHTML = data["content"]["note"];
+                document.getElementsByClassName("note-typing")[0].setAttribute("contenteditable", "");
+            })
+        }
+    })
 }
