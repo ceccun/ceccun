@@ -54,6 +54,10 @@
   src: url("/fonts/inter.ttf");
 }
 
+* {
+  transition: background-color 0.1s linear, color 0.1s linear;
+}
+
 h1,
 h2,
 h3,
