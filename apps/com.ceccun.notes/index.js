@@ -11,6 +11,15 @@ var batchNum = {
 };
 
 const entry = () => {
+  fetch("/apps/com.ceccun.notes/strings.js").then((response) => {
+    if (response.status == 200) {
+      response.text().then((strings) => {
+        var stringElements = document.createElement("script");
+        stringElements.innerHTML = strings;
+        document.body.appendChild(stringElements);
+      });
+    }
+  });
   fetch("/apps/com.ceccun.notes/index.html").then((response) => {
     if (response.status == 200) {
       response.text().then((app) => {
@@ -55,6 +64,28 @@ const downloadNotesList = (batchNumber) => {
             batchNum["notes"] = "fin";
             console.log(batchNum);
           }
+          for (const item of notesListContents) {
+            console.log(item);
+            try {
+              document
+                .getElementsByClassName("loading-state")[0]
+                .setAttribute("id", `notePreviewDiv_${item}`);
+              document
+                .getElementsByClassName("loading-state")[0]
+                .setAttribute("class", "note-item");
+            } catch (error) {
+              var outerElem = document.createElement("div");
+              var inner = document.createElement("div");
+              inner.setAttribute("class", "note-item-inner");
+              inner.innerHTML = `<div class='skel' style='width: 40%; height: 30px; margin-bottom: 10px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 90%; height: 15px;'></div> <div class='skel' style='width: 20%; height: 15px;'></div>`;
+              outerElem.setAttribute("class", "note-item");
+              outerElem.setAttribute("id", `notePreviewDiv_${item}`);
+              outerElem.appendChild(inner);
+              document
+                .getElementsByClassName("ls-notes")[0]
+                .appendChild(outerElem);
+            }
+          }
           var count = 0;
           for (const item in notesListContents) {
             fetch(
@@ -83,20 +114,26 @@ const downloadNotesList = (batchNumber) => {
                   innerElem.appendChild(newPElem);
 
                   try {
-                    document.getElementsByClassName(
-                      "loading-state"
-                    )[0].innerHTML = "";
+                    document.getElementById(
+                      `notePreviewDiv_${notesListContents[item]}`
+                    ).innerHTML = "";
                     document
-                      .getElementsByClassName("loading-state")[0]
+                      .getElementById(
+                        `notePreviewDiv_${notesListContents[item]}`
+                      )
                       .appendChild(innerElem);
                     document
-                      .getElementsByClassName("loading-state")[0]
+                      .getElementById(
+                        `notePreviewDiv_${notesListContents[item]}`
+                      )
                       .setAttribute(
                         "onclick",
                         `openNotes("${notesListContents[item]}")`
                       );
                     document
-                      .getElementsByClassName("loading-state")[0]
+                      .getElementById(
+                        `notePreviewDiv_${notesListContents[item]}`
+                      )
                       .setAttribute("class", "note-item selectable");
                   } catch (error) {
                     var outerElem = document.createElement("div");
@@ -112,6 +149,22 @@ const downloadNotesList = (batchNumber) => {
                   }
                   count += 1;
                 });
+              } else {
+                document.getElementById(
+                  `notePreviewDiv_${notesListContents[item]}`
+                ).innerHTML = `<div class="note-item-inner">
+                  <img style="display: inline-block; vertical-align: middle; height: 20px; filter: var(--invert-icon)" src='/images/alerttri.svg'/>
+                  <p style="display: inline-block; margin: 0 0 0 10px; vertical-align: middle;">Could not load!</p>
+                  </div>`;
+                document
+                  .getElementById(`notePreviewDiv_${notesListContents[item]}`)
+                  .setAttribute("class", "note-item selectable");
+                document
+                  .getElementById(`notePreviewDiv_${notesListContents[item]}`)
+                  .setAttribute(
+                    "onclick",
+                    `openNotes("${notesListContents[item]}")`
+                  );
               }
             });
           }
@@ -225,6 +278,10 @@ const openNotes = (noteNumber) => {
           .getElementsByClassName("note-typing")[0]
           .addEventListener("keyup", reassessInput);
       });
+    } else {
+      document.getElementsByClassName(
+        "note-typing"
+      )[0].innerHTML = `<p style="text-align: center;">Something went wrong.</p><button style="margin: auto;" onclick="document.getElementsByClassName('current-screen')[0].remove();">Close</button>`;
     }
   });
 };
@@ -246,70 +303,22 @@ const saveNote = (noteSteadiness, action = "general") => {
     ) {
       currentNote["lastState"] =
         document.getElementsByClassName("note-typing")[0].innerHTML;
-      currentNote["preview"] =
-        document.getElementsByClassName("note-typing")[0].innerText;
+      currentNote["preview"] = document
+        .getElementsByClassName("note-typing")[0]
+        .innerText.substring(0, 256);
       lastState = currentNote["lastState"];
       ogState = currentNote["ogState"];
 
       if (currentNote["loaded"] == 1) {
         if (lastState != ogState) {
-          if (lastState.startsWith(ogState)) {
-            newNote = lastState.substring(ogState.length, lastState.length);
-            fetch(
-              `https://api.ceccun.com/api/v1/notes/${currentNote["note"]}`,
-              {
-                method: "POST",
-                body: JSON.stringify({
-                  action: {
-                    type: "append",
-                    target: "note",
-                  },
-                  note: newNote,
-                }),
-                headers: {
-                  authorization: ls.getItem("token"),
-                },
-              }
-            ).then((response) => {
-              if (response.status == 200) {
-                response.json().then((data) => {
-                  currentNote["ogState"] = lastState;
-                });
-              }
-            });
-          } else {
-            fetch(
-              `https://api.ceccun.com/api/v1/notes/${currentNote["note"]}`,
-              {
-                method: "POST",
-                body: JSON.stringify({
-                  action: {
-                    type: "replace",
-                    target: "note",
-                  },
-                  note: lastState,
-                }),
-                headers: {
-                  authorization: ls.getItem("token"),
-                },
-              }
-            ).then((response) => {
-              if (response.status == 200) {
-                response.json().then((data) => {
-                  currentNote["ogState"] = lastState;
-                });
-              }
-            });
-          }
-
           fetch(`https://api.ceccun.com/api/v1/notes/${currentNote["note"]}`, {
             method: "POST",
             body: JSON.stringify({
-              action: {
-                type: "replace",
-                target: "preview",
-              },
-              preview: currentNote["preview"].substring(0, 257),
+              note: lastState,
+              preview: currentNote["preview"],
+              attachments: [],
+              encrypted: 0,
+              keychain: 0,
             }),
             headers: {
               authorization: ls.getItem("token"),
@@ -317,6 +326,7 @@ const saveNote = (noteSteadiness, action = "general") => {
           }).then((response) => {
             if (response.status == 200) {
               response.json().then((data) => {
+                currentNote["ogState"] = lastState;
                 document.getElementById(
                   `notePreview_${currentNote["note"]}`
                 ).innerText = currentNote["preview"];
@@ -338,6 +348,6 @@ const saveNote = (noteSteadiness, action = "general") => {
       }
     }
   } catch (error) {
-    //   console.error(error);
+    // console.error(error);
   }
 };
