@@ -44,6 +44,8 @@ body {
   .write-new-note-screen > .popup {
     height: 100vh;
     width: 100%;
+  }
+  .popup {
     background-color: var(--body-color);
     border-radius: 10px;
     z-index: 101;
@@ -148,6 +150,30 @@ body {
     border-left: 0;
     border-right: 0;
   }
+  .delete-note > .screen-background {
+    z-index: 101;
+    background-color: var(--app-color-borders);
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  .delete-note > .popup {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    position: absolute;
+  }
+  .delete-note > .popup > div {
+    margin: 20px;
+    text-align: center;
+  }
+  .delete-note > .popup > div > button {
+    padding: 10px;
+    width: 100%;
+    margin-top: 10px;
+  }
   @media only screen and (max-width: 729px) {
     .rs-notes > .item > p {
       display: none;
@@ -155,6 +181,9 @@ body {
     }
     .rs-notes > .item > img {
       margin: 0;
+    }
+    .write-new-note-screen > .popup > .note-footer > div > p {
+      display: none;
     }
   }
 }
@@ -268,7 +297,7 @@ body {
     filter: var(--invert-icon);
     height: 100%;
   }
-  .write-new-note-screen > .screen-background {
+  .screen-background {
     background-color: var(--app-color-borders);
     height: 100vh;
     width: 100%;
@@ -280,6 +309,8 @@ body {
   .write-new-note-screen > .popup {
     height: 60%;
     width: 600px;
+  }
+  .popup {
     position: fixed;
     top: 50px;
     left: 50%;
@@ -325,9 +356,33 @@ body {
     outline: 0;
   }
   .write-new-note-screen > .popup > .note-outer {
-    height: calc(100% - 92px) !important;
+    height: calc(100% - 140px) !important;
     width: 100%;
     /* margin: 20px; */
+  }
+  .write-new-note-screen > .popup > .note-footer {
+    position: absolute;
+    bottom: 0;
+    height: 50px;
+    border-top: solid 2px var(--app-color-borders);
+    background-color: var(--body-color);
+    width: 100%;
+  }
+  .write-new-note-screen > .popup > .note-footer > div {
+    padding: 10px;
+    border-radius: 20px;
+  }
+  .write-new-note-screen > .popup > .note-footer > div > img {
+    height: 20px;
+    display: inline-block;
+  }
+  .write-new-note-screen > .popup > .note-footer > div > p {
+    /* height: 25px; */
+    display: inline-block;
+  }
+  .write-new-note-screen > .popup > .note-footer > div:hover {
+    background-color: var(--button-color-gray);
+    cursor: pointer;
   }
   .selectable {
     animation: skelLoad 0.7s linear;
@@ -339,6 +394,13 @@ body {
     100% {
       opacity: 1;
     }
+  }
+  .delete-note > .screen-background {
+    z-index: 101;
+  }
+  .delete-note > .popup > div {
+    margin: 20px;
+    text-align: center;
   }
 }
 
@@ -357,4 +419,30 @@ body {
     transition: none !important;
     animation: none !important;
   }
+}
+
+.write-new-note-screen > .popup > .note-footer {
+  position: absolute;
+  bottom: 0;
+  height: 50px;
+  border-top: solid 2px var(--app-color-borders);
+  background-color: var(--body-color);
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.write-new-note-screen > .popup > .note-footer > div {
+  align-self: center;
+  display: flex;
+}
+.write-new-note-screen > .popup > .note-footer > div > img {
+  height: 20px;
+  vertical-align: top;
+  filter: var(--invert-icon);
+}
+.write-new-note-screen > .popup > .note-footer > div > p {
+  /* height: 25px; */
+  align-self: center;
+  margin: 0 0 0 10px;
 }

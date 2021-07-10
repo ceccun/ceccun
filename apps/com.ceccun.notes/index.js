@@ -240,7 +240,18 @@ const createNote = () => {
     method: "POST",
     body: JSON.stringify({
       content: {
-        note: "<h2>Welcome!</h2><br>This is your new note on Ceccun Notes.<br>Ceccun Notes was designed to be:<ul><li>Fast</li><li>Easy</li><li>and Secure.</li></ul><br>Your Ceccun Note is encoded in HTML, so you can put whatever in here!<br><img src='/images/promo/note-screenshot.png' /><br>Enjoy ヾ(•ω•`)o",
+        note: `
+        This is your new note on Ceccun Notes.
+        <br>
+        Ceccun Notes is designed to be:
+        <ul>
+          <li>Fast,</li>
+          <li>easy</li>
+          <li>and just awesome 😎.</li>
+        </ul>
+        <br>
+        <img src='/images/promo/note-screenshot.png' /><br><br>
+        Enjoy ヾ(•ω•')o`,
         preview: "Unedited Note",
         encrypted: 0,
         keychain: 0,
@@ -268,21 +279,55 @@ const openNotes = (noteNumber) => {
   var noteTypeElem = document.createElement("div");
   noteTypeElem.setAttribute("class", "write-new-note-screen current-screen");
   noteTypeElem.innerHTML = `
-    <div class="screen-background"></div>
+       <div class="screen-background"></div>
     <div class="popup">
         <div class="new-note-header">
             <div onclick="saveAndCloseNote()">
-                <img src="/images/chevron.svg"/>
+                <img src="/images/chevron.svg" />
                 <trn>
-                    <div><p>Close Note</p></div>
+                    <div>
+                        <p>Close Note</p>
+                    </div>
                     <div></div>
                 </trn>
             </div>
         </div>
         <div class="note-outer">
-            <div class="note-typing">
+            <div class="note-typing" contenteditable="">
                 <skel />
             </div>
+        </div>
+        <div class="note-footer">
+            <div class="note-footer-image-button">
+                <img src="/images/image.svg" />
+                <trn>
+                    <div>
+                        <p>Media</p>
+                    </div>
+                    <div></div>
+                </trn>
+            </div>
+
+            <div class="note-footer-encrypt-button">
+                <img src="/images/unlocked.svg" />
+                <trn>
+                    <div>
+                        <p>Encryption</p>
+                    </div>
+                    <div></div>
+                </trn>
+            </div>
+
+            <div onclick="deleteNote()" class="note-footer-delete-button">
+                <img src="/images/delete.svg" />
+                <trn>
+                    <div>
+                        <p>Remove</p>
+                    </div>
+                    <div></div>
+                </trn>
+            </div>
+
         </div>
     </div>`;
   document.body.appendChild(noteTypeElem);
@@ -390,5 +435,53 @@ const saveNote = (noteSteadiness, action = "general") => {
     }
   } catch (error) {
     // console.error(error);
+  }
+};
+
+const deleteNote = (noteConfirmation = 0) => {
+  var ls = window.localStorage;
+  if (currentNote["loaded"] == 1) {
+    if (noteConfirmation == 0) {
+      var newElem = document.createElement("div");
+      newElem.innerHTML = `<div class="screen-background"></div>
+        <div class="popup">
+            <div>
+            <h2>Delete Note?</h2>
+            <p>Deleting this note will remove it off all connected devices.</p>
+            <button onclick="deleteNote(1)">Cancel</button>
+            <button onclick="deleteNote(2)">Delete</button>
+            </div>
+        </div>`;
+      newElem.setAttribute("class", "delete-note");
+      document.body.appendChild(newElem);
+    }
+    if (noteConfirmation == 1) {
+      document.getElementsByClassName("delete-note")[0].remove();
+    }
+    if (noteConfirmation == 2) {
+      fetch(`https://api.ceccun.com/api/v1/notes/${currentNote["note"]}`, {
+        method: "POST",
+        body: JSON.stringify({
+          action: "delete",
+        }),
+        headers: {
+          authorization: ls.getItem("token"),
+        },
+      }).then((response) => {
+        if (response.status == 200) {
+          document.getElementsByClassName("ls-notes-notes")[0].innerHTML = ``;
+          batchNum["notes"] = 0;
+          try {
+            document
+              .getElementsByClassName("write-new-note-screen")[0]
+              .remove();
+          } catch (error) {}
+          loadNotes();
+        } else {
+          alert("Failed to delete note!");
+        }
+      });
+      document.getElementsByClassName("delete-note")[0].remove();
+    }
   }
 };
