@@ -4,6 +4,10 @@ var currentNote = {
   loaded: 0,
   lastState: 0,
   ogState: 0,
+  encrypted: 0,
+  keychain: 0,
+  passphrase: 0,
+  unlockedKeychain: 0,
 };
 var batchNum = {
   notes: 0,
@@ -308,7 +312,7 @@ const openNotes = (noteNumber) => {
                 </trn>
             </div>
 
-            <div class="note-footer-encrypt-button">
+            <div onclick="encryptNote()" class="note-footer-encrypt-button">
                 <img src="/images/unlocked.svg" />
                 <trn>
                     <div>
@@ -359,7 +363,12 @@ const openNotes = (noteNumber) => {
           ogState: data["content"]["note"],
           lastState: data["content"]["note"],
           preview: data["content"]["preview"],
+          encrypted: data["content"]["encrypted"],
+          keychain: data["content"]["keychain"],
         };
+        if (currentNote["encrypted"] != 0) {
+          encryptNote(3);
+        }
         document
           .getElementsByClassName("note-typing")[0]
           .addEventListener("keyup", reassessInput);
@@ -387,13 +396,23 @@ const saveNote = (noteSteadiness, action = "general") => {
       noteSteadiness ==
       document.getElementsByClassName("note-typing")[0].innerHTML
     ) {
-      currentNote["lastState"] =
-        document.getElementsByClassName("note-typing")[0].innerHTML;
-      currentNote["preview"] = document
-        .getElementsByClassName("note-typing")[0]
-        .innerText.substring(0, 256);
-      lastState = currentNote["lastState"];
-      ogState = currentNote["ogState"];
+      if (currentNote["encrypted"] == 0) {
+        currentNote["lastState"] =
+          document.getElementsByClassName("note-typing")[0].innerHTML;
+        currentNote["preview"] = document
+          .getElementsByClassName("note-typing")[0]
+          .innerText.substring(0, 256);
+        lastState = currentNote["lastState"];
+        ogState = currentNote["ogState"];
+      } else {
+        currentNote["lastState"] = encrypt(
+          document.getElementsByClassName("note-typing")[0].innerHTML,
+          currentNote["keychain"]
+        );
+        currentNote["preview"] = `Encrypted Note`;
+        lastState = currentNote["lastState"];
+        ogState = currentNote["ogState"];
+      }
 
       if (currentNote["loaded"] == 1) {
         if (lastState != ogState) {
@@ -403,8 +422,8 @@ const saveNote = (noteSteadiness, action = "general") => {
               note: lastState,
               preview: currentNote["preview"],
               attachments: [],
-              encrypted: 0,
-              keychain: 0,
+              encrypted: currentNote["encrypted"],
+              keychain: currentNote["keychain"],
             }),
             headers: {
               authorization: ls.getItem("token"),
@@ -417,6 +436,12 @@ const saveNote = (noteSteadiness, action = "general") => {
                   `notePreview_${currentNote["note"]}`
                 ).innerText = currentNote["preview"];
                 if (action == "closing") {
+                  if (
+                    document.getElementsByClassName("note-typing").innerText ==
+                    ""
+                  ) {
+                    deleteNote(2);
+                  }
                   document
                     .getElementsByClassName("write-new-note-screen")[0]
                     .remove();
@@ -482,6 +507,72 @@ const deleteNote = (noteConfirmation = 0) => {
         }
       });
       document.getElementsByClassName("delete-note")[0].remove();
+    }
+  }
+};
+
+const encryptNote = (encryptNote = 0) => {
+  if (currentNote["loaded"] == 1) {
+    if (encryptNote == 0) {
+      var newElem = document.createElement("div");
+      newElem.innerHTML = `<div class="screen-background"></div>
+        <div class="popup">
+            <div>
+            <h2>Encrypt Note?</h2>
+            <p>Encrypt this note using a set passphrase.</p>
+            <input class="encrypt-note-input" />
+            <button onclick="deleteNote(1)">Cancel</button>
+            <button onclick="encryptNote(2)">Delete</button>
+            </div>
+        </div>`;
+      newElem.setAttribute("class", "delete-note");
+      document.body.appendChild(newElem);
+    }
+
+    if (encryptNote == 2) {
+      var keychain = Math.random();
+      currentNote["keychain"] = encrypt(
+        keychain,
+        document.getElementsByClassName("encrypt-note-input")[0].value
+      );
+      currentNote["unlockedKeychain"] = keychain;
+      currentNote["encrypted"] = 1;
+      document.getElementsByClassName("delete-note")[0].remove();
+    }
+
+    if (encryptNote == 3) {
+      var newElem = document.createElement("div");
+      newElem.innerHTML = `<div class="screen-background"></div>
+        <div class="popup">
+            <div>
+            <h2>Decrypt Note</h2>
+            <p>Break this note's encryption by entering the passphrase.</p>
+            <input class="encrypt-note-input" />
+            <button onclick="deleteNote(1)">Cancel</button>
+            <button onclick="encryptNote(4)">Break</button>
+            </div>
+        </div>`;
+      newElem.setAttribute("class", "delete-note");
+      document.body.appendChild(newElem);
+    }
+
+    if (encryptNote == 4) {
+      var passphrase =
+        document.getElementsByClassName("encrypt-note-input")[0].value;
+
+      currentNote["unlockedKeychain"] = decrypt(
+        currentNote["keychain"],
+        passphrase
+      );
+      document.getElementsByClassName("delete-note")[0].remove();
+      console.log(currentNote["ogState"]);
+      console.log(
+        decrypt(currentNote["ogState"], currentNote["unlockedKeychain"])
+      );
+      document.getElementsByClassName("note-typing")[0].innerHTML = decrypt(
+        currentNote["ogState"],
+        currentNote["unlockedKeychain"]
+      );
     }
   }
 };
