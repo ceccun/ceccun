@@ -82,7 +82,7 @@ const downloadNotesList = (batchNumber) => {
               outerElem.setAttribute("id", `notePreviewDiv_${item}`);
               outerElem.appendChild(inner);
               document
-                .getElementsByClassName("ls-notes")[0]
+                .getElementsByClassName("ls-notes-notes")[0]
                 .appendChild(outerElem);
             }
           }
@@ -136,16 +136,14 @@ const downloadNotesList = (batchNumber) => {
                       )
                       .setAttribute("class", "note-item selectable");
                   } catch (error) {
-                    var outerElem = document.createElement("div");
-                    outerElem.setAttribute("class", "note-item selectable");
-                    outerElem.setAttribute(
-                      "onclick",
-                      `openNotes("${notesListContents[item]}")`
-                    );
-                    outerElem.appendChild(innerElem);
                     document
-                      .getElementsByClassName("ls-notes")[0]
-                      .appendChild(outerElem);
+                      .getElementsByClassName("ls-notes-notes")[0]
+                      .appendChild(
+                        createPreview(
+                          notesListContents[item],
+                          data["content"]["preview"]
+                        )
+                      );
                   }
                   count += 1;
                 });
@@ -179,7 +177,7 @@ const downloadNotesList = (batchNumber) => {
                   item.setAttribute("class", "note-item");
                 }
                 document
-                  .getElementsByClassName("ls-notes")[0]
+                  .getElementsByClassName("ls-notes-notes")[0]
                   .appendChild(newSkel);
               }
               clearInterval(countDetector);
@@ -220,6 +218,49 @@ document.addEventListener("scroll", (e) => {
     }
   }
 });
+
+const createPreview = (noteNum, notePreview) => {
+  var pElem = document.createElement("p");
+  pElem.innerText = notePreview;
+  pElem.setAttribute("id", `notePreview_${noteNum}`);
+  var innerElem = document.createElement("div");
+  innerElem.setAttribute("class", "note-item-inner");
+  innerElem.appendChild(pElem);
+  var outerElem = document.createElement("div");
+  outerElem.setAttribute("class", "note-item selectable");
+  outerElem.setAttribute("onclick", `openNotes("${noteNum}")`);
+  outerElem.setAttribute("id", `notePreviewDiv_${noteNum}`);
+  outerElem.appendChild(innerElem);
+  return outerElem;
+};
+
+const createNote = () => {
+  const ls = window.localStorage;
+  fetch(`https://api.ceccun.com/api/v1/notes`, {
+    method: "POST",
+    body: JSON.stringify({
+      content: {
+        note: "<h2>Welcome!</h2><br>This is your new note on Ceccun Notes.<br>Ceccun Notes was designed to be:<ul><li>Fast</li><li>Easy</li><li>and Secure.</li></ul><br>Your Ceccun Note is encoded in HTML, so you can put whatever in here!<br><img src='/images/promo/note-screenshot.png' /><br>Enjoy ヾ(•ω•`)o",
+        preview: "Unedited Note",
+        encrypted: 0,
+        keychain: 0,
+        attachments: [],
+      },
+    }),
+    headers: {
+      authorization: ls.getItem("token"),
+    },
+  }).then((response) => {
+    if (response.status == 200) {
+      response.json().then((data) => {
+        document
+          .getElementsByClassName("ls-notes-notes")[0]
+          .prepend(createPreview(data["content"], "New Note"));
+        openNotes(data["content"]);
+      });
+    }
+  });
+};
 
 const openNotes = (noteNumber) => {
   const ls = window.localStorage;
