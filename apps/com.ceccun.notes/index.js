@@ -397,8 +397,9 @@ const saveNote = (noteSteadiness, action = "general") => {
       document.getElementsByClassName("note-typing")[0].innerHTML
     ) {
       if (currentNote["encrypted"] == 0) {
-        currentNote["lastState"] =
-          document.getElementsByClassName("note-typing")[0].innerHTML;
+        currentNote["lastState"] = document
+          .getElementsByClassName("note-typing")[0]
+          .innerHTML.toString();
         currentNote["preview"] = document
           .getElementsByClassName("note-typing")[0]
           .innerText.substring(0, 256);
@@ -407,7 +408,7 @@ const saveNote = (noteSteadiness, action = "general") => {
       } else {
         currentNote["lastState"] = encrypt(
           document.getElementsByClassName("note-typing")[0].innerHTML,
-          currentNote["keychain"]
+          currentNote["unlockedKeychain"]
         );
         currentNote["preview"] = `Encrypted Note`;
         lastState = currentNote["lastState"];
@@ -560,19 +561,29 @@ const encryptNote = (encryptNote = 0) => {
       var passphrase =
         document.getElementsByClassName("encrypt-note-input")[0].value;
 
-      currentNote["unlockedKeychain"] = decrypt(
-        currentNote["keychain"],
-        passphrase
-      );
+      try {
+        currentNote["unlockedKeychain"] = decrypt(
+          currentNote["keychain"],
+          passphrase
+        );
+      } catch (error) {
+        document.getElementsByClassName("delete-note")[0].remove();
+        document.getElementsByClassName("write-new-note-screen")[0].remove();
+      }
       document.getElementsByClassName("delete-note")[0].remove();
       console.log(currentNote["ogState"]);
       console.log(
         decrypt(currentNote["ogState"], currentNote["unlockedKeychain"])
       );
-      document.getElementsByClassName("note-typing")[0].innerHTML = decrypt(
-        currentNote["ogState"],
-        currentNote["unlockedKeychain"]
-      );
+      try {
+        document.getElementsByClassName("note-typing")[0].innerHTML = decrypt(
+          currentNote["ogState"],
+          currentNote["unlockedKeychain"]
+        );
+      } catch (error) {
+        document.getElementsByClassName("delete-note")[0].remove();
+        document.getElementsByClassName("write-new-note-screen")[0].remove();
+      }
     }
   }
 };
