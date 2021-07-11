@@ -186,6 +186,13 @@ body {
       display: none;
     }
   }
+  .write-new-note-screen
+    > .popup
+    > .note-footer
+    > div
+    > .note-footer-button-context {
+    display: none;
+  }
 }
 
 @media only screen and (min-width: 769px) {
@@ -383,6 +390,55 @@ body {
   .write-new-note-screen > .popup > .note-footer > div:hover {
     background-color: var(--button-color-gray);
     cursor: pointer;
+  }
+  .write-new-note-screen
+    > .popup
+    > .note-footer
+    > div
+    > .note-footer-button-context {
+    display: none;
+  }
+  .write-new-note-screen
+    > .popup
+    > .note-footer
+    > div:hover
+    > .note-footer-button-context {
+    display: block;
+    width: 150px;
+    /* height: 100px; */
+    background-color: var(--body-color);
+    border: solid 2px var(--app-color-borders);
+    position: absolute;
+    bottom: 45px;
+    animation: slideUpContext 0.3s ease;
+    text-align: center;
+    border-radius: 10px;
+    padding: 10px;
+    /* transform: translateX(calc(-10px - 50%)); */
+  }
+
+  @keyframes slideUpContext {
+    0% {
+      opacity: 0;
+      bottom: 35px;
+    }
+    100% {
+      opacity: 1;
+      bottom: 45px;
+    }
+  }
+
+  .note-footer-button-context > .button {
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    background-color: var(--body-color);
+    border-radius: 10px;
+    transition: none;
+  }
+  .note-footer-button-context > .button:hover {
+    background-color: var(--button-color-gray);
   }
   .selectable {
     animation: skelLoad 0.7s linear;

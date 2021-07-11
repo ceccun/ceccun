@@ -302,6 +302,24 @@ const openNotes = (noteNumber) => {
             </div>
         </div>
         <div class="note-footer">
+            <div class="note-footer-add-button">
+                <img src="/images/new.svg" />
+                <trn>
+                    <div>
+                        <p>Add</p>
+                    </div>
+                    <div></div>
+                </trn>
+
+                <div style="transform: translateX(-20px)" class="note-footer-button-context">
+                  <p>Add New</p>
+                  <div class="button">Title</div>
+                  <div class="button">Body</div>
+                  <div class="button">Checkmark</div>
+                  <div class="button">List</div>
+                </div>
+            </div>
+
             <div class="note-footer-image-button">
                 <img src="/images/image.svg" />
                 <trn>
@@ -312,24 +330,34 @@ const openNotes = (noteNumber) => {
                 </trn>
             </div>
 
-            <div onclick="encryptNote()" class="note-footer-encrypt-button">
-                <img src="/images/unlocked.svg" />
+            <div class="note-footer-encrypt-button">
+                <img onclick="encryptNote()" src="/images/unlocked_holo.svg" />
                 <trn>
                     <div>
-                        <p>Encryption</p>
+                        <p onclick="encryptNote()">Encryption</p>
                     </div>
                     <div></div>
                 </trn>
+
+                <div style="transform: translateX(-33px);" class="note-footer-button-context">
+                  <p>This note is not encrypted.</p>
+                  <div onclick="encryptNote()" class="button">Encrypt</div>
+                </div>
             </div>
 
-            <div onclick="deleteNote()" class="note-footer-delete-button">
-                <img src="/images/delete.svg" />
+            <div class="note-footer-delete-button">
+                <img onclick="deleteNote()" src="/images/delete.svg" />
                 <trn>
                     <div>
-                        <p>Remove</p>
+                        <p onclick="deleteNote()">Remove</p>
                     </div>
                     <div></div>
                 </trn>
+
+                <div style="transform: translateX(-60px)" class="note-footer-button-context">
+                  <p>Remove Note?</p>
+                  <div onclick="deleteNote(2)" class="button">Remove</div>
+                </div>
             </div>
 
         </div>
@@ -522,7 +550,7 @@ const encryptNote = (encryptNote = 0) => {
             <h2>Encrypt Note?</h2>
             <p>Encrypt this note using a set passphrase.</p>
             <input class="encrypt-note-input" />
-            <button onclick="deleteNote(1)">Cancel</button>
+            <button onclick="encryptNote(5)">Cancel</button>
             <button onclick="encryptNote(2)">Delete</button>
             </div>
         </div>`;
@@ -539,6 +567,16 @@ const encryptNote = (encryptNote = 0) => {
       currentNote["unlockedKeychain"] = keychain;
       currentNote["encrypted"] = 1;
       document.getElementsByClassName("delete-note")[0].remove();
+      document.getElementsByClassName(
+        "note-footer-encrypt-button"
+      )[0].innerHTML = `
+      <img src="/images/locked_holo.svg">
+      <trn>
+        <div>
+          <p>Encryption</p>
+        </div>
+      </trn>
+      `;
     }
 
     if (encryptNote == 3) {
@@ -549,12 +587,22 @@ const encryptNote = (encryptNote = 0) => {
             <h2>Decrypt Note</h2>
             <p>Break this note's encryption by entering the passphrase.</p>
             <input class="encrypt-note-input" />
-            <button onclick="deleteNote(1)">Cancel</button>
+            <button onclick="encryptNote(5)">Cancel</button>
             <button onclick="encryptNote(4)">Break</button>
             </div>
         </div>`;
       newElem.setAttribute("class", "delete-note");
       document.body.appendChild(newElem);
+      document.getElementsByClassName(
+        "note-footer-encrypt-button"
+      )[0].innerHTML = `
+      <img src="/images/locked_holo.svg">
+      <trn>
+        <div>
+          <p>Encryption</p>
+        </div>
+      </trn>
+      `;
     }
 
     if (encryptNote == 4) {
@@ -584,6 +632,11 @@ const encryptNote = (encryptNote = 0) => {
         document.getElementsByClassName("delete-note")[0].remove();
         document.getElementsByClassName("write-new-note-screen")[0].remove();
       }
+    }
+
+    if (encryptNote == 5) {
+      document.getElementsByClassName("delete-note")[0].remove();
+      document.getElementsByClassName("write-new-note-screen")[0].remove();
     }
   }
 };
