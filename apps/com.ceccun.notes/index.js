@@ -1,4 +1,5 @@
 var currentSection = "notes";
+var importedScripts = [];
 var currentNote = {
   note: null,
   loaded: 0,
@@ -8,6 +9,7 @@ var currentNote = {
   keychain: 0,
   passphrase: 0,
   unlockedKeychain: 0,
+  caret: 0,
 };
 var batchNum = {
   notes: 0,
@@ -280,6 +282,19 @@ const createNote = () => {
 const openNotes = (noteNumber) => {
   const ls = window.localStorage;
 
+  if (importedScripts.includes("markdown.js") == false) {
+    importedScripts.push("markdown.js");
+    fetch("/apps/com.ceccun.notes/js/marked.js").then((response) => {
+      if (response.status == 200) {
+        response.text().then((data) => {
+          var mdScript = document.createElement("script");
+          mdScript.innerHTML = data;
+          document.body.appendChild(mdScript);
+        });
+      }
+    });
+  }
+
   var noteTypeElem = document.createElement("div");
   noteTypeElem.setAttribute("class", "write-new-note-screen current-screen");
   noteTypeElem.innerHTML = `
@@ -300,6 +315,9 @@ const openNotes = (noteNumber) => {
             <div class="note-typing" contenteditable="">
                 <skel />
             </div>
+            <div class="note-typing md" style="display: none;">
+                <skel />
+            </div>
         </div>
         <div class="note-footer">
             <div class="note-footer-add-button">
@@ -313,10 +331,10 @@ const openNotes = (noteNumber) => {
 
                 <div style="transform: translateX(-20px)" class="note-footer-button-context">
                   <p>Add New</p>
-                  <div class="button">Title</div>
+                  <div onclick="addTextElem('title')" class="button">Title</div>
                   <div class="button">Body</div>
                   <div class="button">Checkmark</div>
-                  <div class="button">List</div>
+                  <div onclick="addTextElem('list')" class="button">List</div>
                 </div>
             </div>
 
@@ -400,6 +418,15 @@ const openNotes = (noteNumber) => {
         document
           .getElementsByClassName("note-typing")[0]
           .addEventListener("keyup", reassessInput);
+        document
+          .getElementsByClassName("note-typing")[0]
+          .addEventListener("mouseout", noteLoseFocus);
+        document
+          .getElementsByClassName("note-typing")[0]
+          .addEventListener("mouseover", noteBackIn);
+        document
+          .getElementsByClassName("note-typing")[1]
+          .addEventListener("mouseover", noteBackIn);
       });
     } else {
       document.getElementsByClassName(
@@ -409,12 +436,47 @@ const openNotes = (noteNumber) => {
   });
 };
 
-const reassessInput = () => {
+const reassessInput = (e) => {
+  currentNote["caret"] = getCaretPosition(
+    document.getElementsByClassName("note-typing")[0]
+  );
+  console.log(e);
   var noteSteadiness =
     document.getElementsByClassName("note-typing")[0].innerHTML;
   setTimeout(() => {
     saveNote(noteSteadiness);
   }, 1500);
+};
+
+const noteLoseFocus = () => {
+  console.log("lsot");
+  var textSplit = document
+    .getElementsByClassName("note-typing")[0]
+    .innerText.split("\n");
+  document.getElementsByClassName("note-typing")[1].setAttribute("style", "");
+  document
+    .getElementsByClassName("note-typing")[0]
+    .setAttribute("style", "display: none");
+
+  for (item in textSplit) {
+    if (item == 0) {
+      document.getElementsByClassName("note-typing")[1].innerHTML = ``;
+    }
+    if (textSplit[item].trim() == "") {
+      document.getElementsByClassName("note-typing")[1].innerHTML += `<br>`;
+      console.log(textSplit[item]);
+    }
+    document.getElementsByClassName("note-typing")[1].innerHTML += marked(
+      textSplit[item]
+    );
+  }
+};
+
+const noteBackIn = () => {
+  document
+    .getElementsByClassName("note-typing")[1]
+    .setAttribute("style", "display: none");
+  document.getElementsByClassName("note-typing")[0].setAttribute("style", "");
 };
 
 const saveNote = (noteSteadiness, action = "general") => {
@@ -429,7 +491,7 @@ const saveNote = (noteSteadiness, action = "general") => {
           .getElementsByClassName("note-typing")[0]
           .innerHTML.toString();
         currentNote["preview"] = document
-          .getElementsByClassName("note-typing")[0]
+          .getElementsByClassName("note-typing")[1]
           .innerText.substring(0, 256);
         lastState = currentNote["lastState"];
         ogState = currentNote["ogState"];
@@ -541,6 +603,21 @@ const deleteNote = (noteConfirmation = 0) => {
 };
 
 const encryptNote = (encryptNote = 0) => {
+  var lockedState = `
+      <img src="/images/locked_holo.svg">
+      <trn>
+        <div>
+          <p>Encryption</p>
+        </div>
+      </trn>
+
+
+      <div style="transform: translateX(-33px);" class="note-footer-button-context">
+        <p>This note is encryped.</p>
+        <div onclick="encryptNote(7)" class="button">Change</div>
+        <div onclick="encryptNote(6)" class="button">Disable</div>
+      </div>
+      `;
   if (currentNote["loaded"] == 1) {
     if (encryptNote == 0) {
       var newElem = document.createElement("div");
@@ -569,14 +646,7 @@ const encryptNote = (encryptNote = 0) => {
       document.getElementsByClassName("delete-note")[0].remove();
       document.getElementsByClassName(
         "note-footer-encrypt-button"
-      )[0].innerHTML = `
-      <img src="/images/locked_holo.svg">
-      <trn>
-        <div>
-          <p>Encryption</p>
-        </div>
-      </trn>
-      `;
+      )[0].innerHTML = lockedState;
     }
 
     if (encryptNote == 3) {
@@ -595,14 +665,7 @@ const encryptNote = (encryptNote = 0) => {
       document.body.appendChild(newElem);
       document.getElementsByClassName(
         "note-footer-encrypt-button"
-      )[0].innerHTML = `
-      <img src="/images/locked_holo.svg">
-      <trn>
-        <div>
-          <p>Encryption</p>
-        </div>
-      </trn>
-      `;
+      )[0].innerHTML = lockedState;
     }
 
     if (encryptNote == 4) {
@@ -639,4 +702,43 @@ const encryptNote = (encryptNote = 0) => {
       document.getElementsByClassName("write-new-note-screen")[0].remove();
     }
   }
+};
+
+const addTextElem = (type) => {
+  if (currentNote["loaded"] == 1) {
+    if (type == "title") {
+      var titleElem = document.createElement("h1");
+      titleElem.innerText = "Title";
+      document.getElementsByClassName("note-typing")[0].appendChild(titleElem);
+    }
+    if (type == "list") {
+      var listElem = document.createElement("ol");
+      listElem.innerHTML = "<li></li>";
+      document.getElementsByClassName("note-typing")[0].appendChild(listElem);
+    }
+  }
+};
+
+const getCaretPosition = (element) => {
+  var caretOffset = 0;
+  var doc = element.ownerDocument || element.document;
+  var win = doc.defaultView || doc.parentWindow;
+  var sel;
+  if (typeof win.getSelection != "undefined") {
+    sel = win.getSelection();
+    if (sel.rangeCount > 0) {
+      var range = win.getSelection().getRangeAt(0);
+      var preCaretRange = range.cloneRange();
+      preCaretRange.selectNodeContents(element);
+      preCaretRange.setEnd(range.endContainer, range.endOffset);
+      caretOffset = preCaretRange.toString().length;
+    }
+  } else if ((sel = doc.selection) && sel.type != "Control") {
+    var textRange = sel.createRange();
+    var preCaretTextRange = doc.body.createTextRange();
+    preCaretTextRange.moveToElementText(element);
+    preCaretTextRange.setEndPoint("EndToEnd", textRange);
+    caretOffset = preCaretTextRange.text.length;
+  }
+  return caretOffset;
 };

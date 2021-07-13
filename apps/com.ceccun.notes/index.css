@@ -24,6 +24,21 @@ body {
   filter: var(--invert-icon);
 }
 
+.note-typing p {
+  margin: 0;
+}
+.note-typing h1,
+.note-typing h2,
+.note-typing h3,
+.note-typing h4,
+.note-typing h5,
+.note-typing h6 {
+  margin: 5px 0px 5px 0px;
+}
+.md br {
+  line-height: 5px;
+}
+
 @media only screen and (max-width: 768px) {
   .current-screen {
     width: 100%;
