@@ -1,8 +1,9 @@
 {
     "name": "Notes",
     "package": "com.ceccun.notes",
-    "entryPoint": "/apps/com.ceccun.notes/index.js",
-    "icon": "/images/notes.svg",
+    "entryPoint": "index.js",
+    "icon": "images/notes.svg",
+    "virtURI": "/notes/",
     "flse": [{
         "name": "trn",
         "src": "/js/modules/trainerBlocks.js",
@@ -14,7 +15,7 @@
         "type": "module"
     },
     {
-        "src": "/apps/com.ceccun.notes/notesskel.json",
+        "src": "notesskel.json",
         "type": "components"
     }]
 }

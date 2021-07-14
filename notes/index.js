@@ -1,3 +1,7 @@
+include("js/marked.js");
+
+document.title = "Ceccun Notes";
+
 var currentSection = "notes";
 var importedScripts = [];
 var currentNote = {
@@ -17,7 +21,7 @@ var batchNum = {
 };
 
 const entry = () => {
-  fetch("/apps/com.ceccun.notes/strings.js").then((response) => {
+  fetch("strings.js").then((response) => {
     if (response.status == 200) {
       response.text().then((strings) => {
         var stringElements = document.createElement("script");
@@ -26,7 +30,7 @@ const entry = () => {
       });
     }
   });
-  fetch("/apps/com.ceccun.notes/index.html").then((response) => {
+  fetch("screen-activity.html").then((response) => {
     if (response.status == 200) {
       response.text().then((app) => {
         var appElement = document.createElement("div");
@@ -34,6 +38,10 @@ const entry = () => {
         document.body.appendChild(appElement);
         showApp();
         loadNotes();
+        var noteID = new URL(window.location).searchParams.get("noteId");
+        if (noteID != null || noteID != undefined) {
+          openNotes(noteID);
+        }
       });
     } else {
     }
@@ -45,6 +53,7 @@ const saveAndCloseNote = () => {
     document.getElementsByClassName("note-typing")[0].innerHTML,
     "closing"
   );
+  window.history.pushState("", "", "?");
 };
 
 const loadNotes = () => {
@@ -158,7 +167,7 @@ const downloadNotesList = (batchNumber) => {
                   `notePreviewDiv_${notesListContents[item]}`
                 ).innerHTML = `<div class="note-item-inner">
                   <img style="display: inline-block; vertical-align: middle; height: 20px; filter: var(--invert-icon)" src='/images/alerttri.svg'/>
-                  <p style="display: inline-block; margin: 0 0 0 10px; vertical-align: middle;">Could not load!</p>
+                  <p style="display: inline-block; margin: 0 0 0 10px; vertical-align: middle;">This note is unavailable.</p>
                   </div>`;
                 document
                   .getElementById(`notePreviewDiv_${notesListContents[item]}`)
@@ -281,19 +290,19 @@ const createNote = () => {
 
 const openNotes = (noteNumber) => {
   const ls = window.localStorage;
-
-  if (importedScripts.includes("markdown.js") == false) {
-    importedScripts.push("markdown.js");
-    fetch("/apps/com.ceccun.notes/js/marked.js").then((response) => {
-      if (response.status == 200) {
-        response.text().then((data) => {
-          var mdScript = document.createElement("script");
-          mdScript.innerHTML = data;
-          document.body.appendChild(mdScript);
-        });
-      }
-    });
-  }
+  window.history.pushState("", "", `?noteId=${noteNumber}`);
+  // if (importedScripts.includes("markdown.js") == false) {
+  //   importedScripts.push("markdown.js");
+  //   fetch("js/marked.js").then((response) => {
+  //     if (response.status == 200) {
+  //       response.text().then((data) => {
+  //         var mdScript = document.createElement("script");
+  //         mdScript.innerHTML = data;
+  //         document.body.appendChild(mdScript);
+  //       });
+  //     }
+  //   });
+  // }
 
   var noteTypeElem = document.createElement("div");
   noteTypeElem.setAttribute("class", "write-new-note-screen current-screen");
@@ -321,7 +330,7 @@ const openNotes = (noteNumber) => {
         </div>
         <div class="note-footer">
             <div class="note-footer-add-button">
-                <img src="/images/new.svg" />
+                <img src="../images/new.svg" />
                 <trn>
                     <div>
                         <p>Add</p>
@@ -431,7 +440,7 @@ const openNotes = (noteNumber) => {
     } else {
       document.getElementsByClassName(
         "note-typing"
-      )[0].innerHTML = `<p style="text-align: center;">Something went wrong.</p><button style="margin: auto;" onclick="document.getElementsByClassName('current-screen')[0].remove();">Close</button>`;
+      )[0].innerHTML = `<p style="text-align: center;">This note is unavailable</p><button style="text-align: center;" onclick="document.getElementsByClassName('current-screen')[0].remove(); window.history.pushState('','','?')">Close</button>`;
     }
   });
 };
@@ -440,7 +449,6 @@ const reassessInput = (e) => {
   currentNote["caret"] = getCaretPosition(
     document.getElementsByClassName("note-typing")[0]
   );
-  console.log(e);
   var noteSteadiness =
     document.getElementsByClassName("note-typing")[0].innerHTML;
   setTimeout(() => {
@@ -453,10 +461,12 @@ const noteLoseFocus = () => {
   var textSplit = document
     .getElementsByClassName("note-typing")[0]
     .innerText.split("\n");
-  document.getElementsByClassName("note-typing")[1].setAttribute("style", "");
-  document
-    .getElementsByClassName("note-typing")[0]
-    .setAttribute("style", "display: none");
+  if (document.activeElement.className != "note-typing") {
+    document.getElementsByClassName("note-typing")[1].setAttribute("style", "");
+    document
+      .getElementsByClassName("note-typing")[0]
+      .setAttribute("style", "display: none");
+  }
 
   for (item in textSplit) {
     if (item == 0) {
