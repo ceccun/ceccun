@@ -256,16 +256,13 @@ const createNote = () => {
     body: JSON.stringify({
       content: {
         note: `
-        This is your new note on Ceccun Notes.
-        <br>
-        Ceccun Notes is designed to be:
-        <ul>
-          <li>Fast,</li>
-          <li>easy</li>
-          <li>and just awesome 😎.</li>
-        </ul>
-        <br>
-        <img src='/images/promo/note-screenshot.png' /><br><br>
+        This is your new note on Ceccun Notes.<br>
+        Ceccun Notes is designed to be:<br>
+        - Fast,<br>
+        - easy<br>
+        - and just awesome 😎.<br>
+
+        ![alt](/images/promo/note-screenshot.png)<br>
         Enjoy ヾ(•ω•')o`,
         preview: "Unedited Note",
         encrypted: 0,
@@ -432,10 +429,10 @@ const openNotes = (noteNumber) => {
           .addEventListener("mouseout", noteLoseFocus);
         document
           .getElementsByClassName("note-typing")[0]
-          .addEventListener("mouseover", noteBackIn);
+          .addEventListener("mousedown", noteBackIn);
         document
           .getElementsByClassName("note-typing")[1]
-          .addEventListener("mouseover", noteBackIn);
+          .addEventListener("mousedown", noteBackIn);
       });
     } else {
       document.getElementsByClassName(
