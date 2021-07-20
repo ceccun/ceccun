@@ -127,14 +127,27 @@ trn {
   /* background-color: var(--skel-color); */
   border-radius: 5px;
   margin-bottom: 5px;
-  background: linear-gradient(
+  background-color: var(--skel-color);
+  /* background: linear-gradient(
     270deg,
     var(--skel-color) 25%,
     var(--body-color) 50%,
     var(--skel-color) 75%
-  );
-  animation: skel 1s linear infinite;
+  ); */
+  animation: skelLite 1s linear infinite;
   background-size: 300% 300%;
+}
+
+@keyframes skelLite {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes skel {
