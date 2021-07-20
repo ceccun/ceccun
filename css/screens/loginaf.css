@@ -1,0 +1,24 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.login-popout-middle {
+  background-color: var(--body-color);
+  border: solid 2px var(--app-color-borders);
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media only screen and (min-width: 768px) {
+  .login-popout-middle {
+    width: 60vh;
+    padding: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+  }
+}

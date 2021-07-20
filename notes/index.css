@@ -329,7 +329,7 @@ body {
     z-index: 100;
   }
   .write-new-note-screen > .popup {
-    height: 60%;
+    height: 80%;
     width: 600px;
   }
   .popup {
