@@ -4,6 +4,7 @@ flsestrings["addnew"] = {
   it: "Inserisci",
   es: "Agregar",
   fr: "Ajouter",
+  fi: "Lisää uusi",
 };
 
 flsestrings["notes"] = {
@@ -12,6 +13,7 @@ flsestrings["notes"] = {
   it: "Appunti",
   es: "Notas",
   fr: "Remarques",
+  fi: "Muistiinpanot",
 };
 
 flsestrings["flashcards"] = {
@@ -20,6 +22,7 @@ flsestrings["flashcards"] = {
   it: "Carte",
   es: "Tarjetas",
   fr: "Cartes",
+  fi: "Muistikortit",
 };
 
 flsestrings["about"] = {
@@ -28,4 +31,5 @@ flsestrings["about"] = {
   it: "Di",
   es: "Acerca de",
   fr: "À propos",
+  fi: "Tietoa",
 };
