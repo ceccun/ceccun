@@ -4,6 +4,7 @@ flsestrings["hello"] = {
   fr: "Salut,",
   es: "Hola,",
   it: "Ciao,",
+  fi: "Hei,",
 };
 flsestrings["signin"] = {
   default: "Sign In",
@@ -11,6 +12,7 @@ flsestrings["signin"] = {
   fr: "S'identifier",
   es: "Iniciar Sesión",
   it: "Login",
+  fi: "Kirjaudu sisään",
 };
 flsestrings["emailadd"] = {
   default: "Email Address",
@@ -18,6 +20,7 @@ flsestrings["emailadd"] = {
   fr: "E-mail",
   es: "Correo electrónico",
   it: "Indirizzo e-mail",
+  fi: "Sähköpostiosoite",
 };
 flsestrings["password"] = {
   default: "Password",
@@ -25,6 +28,7 @@ flsestrings["password"] = {
   fr: "Mot de passe",
   es: "Contraseña",
   it: "Parola d'ordine",
+  fi: "Salasana",
 };
 flsestrings["incorrect"] = {
   default: "Sorry! That didn't work.",
@@ -32,6 +36,7 @@ flsestrings["incorrect"] = {
   fr: "Pardon! Identifiants incorrects.",
   es: "Contraseña o correo electrónico incorrecto.",
   it: "Scusa! Non ha funzionato. ",
+  fi: "Anteeksi! Tämä ei toiminut."
 };
 
 let appID = new URL(window.location).searchParams.get("appID");
