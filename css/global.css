@@ -22,9 +22,9 @@
   :root {
     --big-font: "Eudoxus Sans";
     --normal-font: "Inter";
-    --body-color: #121212;
+    --body-color: rgb(18, 18, 18);
     --text-color: rgba(255, 255, 255, 1);
-    --body-color-light: rgba(0, 0, 0, 0.8);
+    --body-color-light: rgba(18, 18, 18, 0.8);
     --button-color-gray: rgba(255, 255, 255, 0.116);
     --button-color-gray-hov: rgba(255, 255, 255, 0.226);
     --loading-color: rgba(255, 255, 255, 0.1);
@@ -156,5 +156,78 @@ trn {
   }
   100% {
     background-position: 0% 50%;
+  }
+}
+
+.notification h3,
+.notification p {
+  margin: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+@media only screen and (min-width: 729px) {
+  .notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+  .notification-inner {
+    background-color: var(--body-color-light);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    height: 85px;
+  }
+  .notification-inner-inner {
+    margin: 10px;
+  }
+}
+
+@media only screen and (max-width: 728px) {
+  .notification {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    height: 215px;
+    padding: 10px;
+    overflow-y: auto;
+    animation: notificationFlyIn 0.3s cubic-bezier(0, 1, 0.55, 0.97) forwards;
+    animation-delay: 1s;
+    transform: translateZ(0);
+    scroll-snap-type: y proximity;
+  }
+  .notification-flyout {
+    animation: notificationFlyOut 0.3s cubic-bezier(0, 1, 0.55, 0.97) forwards;
+  }
+  .notification-inner {
+    background-color: var(--body-color-light);
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    height: 85px;
+    box-shadow: 0px 8px 24px var(--app-color-borders);
+  }
+  .notification-inner-inner {
+    margin: 10px;
+  }
+  .notification-padding {
+    height: 100px;
+    scroll-snap-align: start;
+  }
+
+  @keyframes notificationFlyIn {
+    0% {
+      top: -220px;
+    }
+    100% {
+      top: -110px;
+    }
+  }
+  @keyframes notificationFlyOut {
+    0% {
+      top: -110px;
+    }
+    100% {
+      top: -220px;
+    }
   }
 }

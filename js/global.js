@@ -1,4 +1,5 @@
 var flsestrings = {};
+var notification = 0;
 
 var date = new Date();
 flsestrings["copyright"] = {
@@ -28,6 +29,13 @@ const checkNetConnection = () => {
           response.json().then((data) => {
             if (data["error"] == "1") {
               networkConnection = true;
+              if (data["signal"] == "ratelimit")
+                [
+                  sendNotification(
+                    "Network Manager",
+                    "You are being ratelimited."
+                  ),
+                ];
               return;
             } else {
               networkConnection = false;
@@ -62,4 +70,39 @@ const include = (filename) => {
   script.type = "text/javascript";
 
   head.appendChild(script);
+};
+
+const sendNotification = (appName, content, timeout = 5000) => {
+  const notificationElem = document.createElement("div");
+  const random = btoa(Math.random());
+  notificationElem.setAttribute("class", "notification");
+  notificationElem.setAttribute("id", random);
+  notificationElem.innerHTML = `
+        <div style="scroll-snap-align: end" class="notification-padding"></div>
+        <div class="notification-inner">
+            <div class="notification-inner-inner">
+                <h3>${appName}</h3>
+                <p>${content}</p>
+            </div>
+        </div>
+        <div class="notification-padding"></div>
+        <div class="notification-padding"></div>`;
+  document.body.append(notificationElem);
+
+  document.getElementById(random).addEventListener("scroll", (e) => {
+    const scroll = document.getElementById(random).scrollTop;
+    if (scroll > 179) {
+      document.getElementById(random).remove();
+    }
+  });
+
+  setTimeout(() => {
+    document
+      .getElementById(random)
+      .setAttribute("class", "notification notification-flyout");
+
+    setTimeout(() => {
+      document.getElementById(random).remove();
+    }, 400);
+  }, timeout);
 };
