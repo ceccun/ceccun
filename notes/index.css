@@ -45,26 +45,35 @@ body {
     height: 100vh;
     position: fixed;
     top: 0;
-    animation: openCurrentScreen 0.3s ease;
+    overflow: hidden;
+    animation: openCurrentScreen 0.6s ease;
     transform: translateZ(0);
   }
   @keyframes openCurrentScreen {
     0% {
       left: 100%;
+      box-shadow: -3px 0px 10px #888888;
+      width: 0%;
     }
     100% {
       left: 0%;
+      box-shadow: 0px 0px 0px #888888;
+      width: 100%;
     }
   }
   .write-new-note-screen > .popup {
     height: 100vh;
-    width: 100%;
+    width: 100vw !important;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
   }
   .popup {
     background-color: var(--body-color);
     border-radius: 10px;
     z-index: 101;
     overflow-y: hidden;
+    width: 100vw !important;
   }
   .write-new-note-screen > .popup > .new-note-header {
     display: flex;
@@ -97,7 +106,7 @@ body {
     outline: 0;
   }
   .write-new-note-screen > .popup > .note-outer > .note-typing img {
-    width: 100% !important;
+    width: 100%;
     /* padding: 20px; */
     overflow-y: auto;
     border-radius: var(--button-radius);
@@ -105,8 +114,11 @@ body {
   }
   .write-new-note-screen > .popup > .note-outer {
     height: calc(100% - 92px) !important;
-    width: 100%;
+    width: 100vw;
     /* margin: 20px; */
+  }
+  .write-new-note-screen > .popup > .note-footer {
+    width: 100vw;
   }
   .create-new-modal-container {
     display: none;
@@ -473,6 +485,9 @@ body {
     margin: 20px;
     text-align: center;
   }
+  .write-new-note-screen > .popup > .note-footer {
+    width: 100%;
+  }
 }
 
 .note-item-inner {
@@ -498,7 +513,6 @@ body {
   height: 50px;
   border-top: solid 2px var(--app-color-borders);
   background-color: var(--body-color);
-  width: 100%;
   display: flex;
   justify-content: space-around;
 }
