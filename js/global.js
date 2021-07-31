@@ -2,7 +2,7 @@ var flsestrings = {};
 
 var date = new Date();
 flsestrings["copyright"] = {
-  default: `© Fivnex, LLC ${date.getUTCFullYear().toString()} `,
+  default: `© Ceccun ${date.getUTCFullYear().toString()} `,
 };
 flsestrings["nointernet"] = {
   default: "No Internet Connection.",
@@ -10,10 +10,12 @@ flsestrings["nointernet"] = {
   es: "Sin conexión a Internet",
   fr: "Pas de connexion Internet.",
   it: "Nessuna connessione internet.",
+  fi: "Ei Internet-yhteyttä.",
 };
 flsestrings["fieldrequired"] = {
   default: "Field cannot be left empty.",
   it: "Il campo di inserimento non può essere lasciato vuoto.",
+  fi: "Kenttää ei voi jättää tyhjäksi.",
 };
 
 var networkConnection = false;
