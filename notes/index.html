@@ -1,32 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ceccun App Bootstrap</title>
-    
+    <title>Connecting to app...</title>
+    <meta content="Ceccun Notes" property="og:title" />
+    <meta content="Your cloud note-taking platform." property="og:description" />
+    <meta content="https://ceccun.com/notes/" property="og:url" />
     <script>
-        window["goTo"] = "manifest.json";
+        const params = window.location.search.replace("?","&");
+        window.location.replace(`/app.html?package=notes${params}`);
     </script>
-    <link preload="/css/global.css" as="style" />
-    <link preload="https://cdn.jsdelivr.net/gh/stel-la/flse@main/flse.min.js" as="script" />
-    <link href="/css/global.css" rel="stylesheet" />
-    <link href="/css/app.css" rel="stylesheet" />
 </head>
-
-<body>
-    <div class="app-splash">
-
-    </div>
-
-
-    <script src="/js/global.js"></script>
-    <script src="/js/cryptographic.js"></script>
-    <script src="/js/appLoader.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/stel-la/flse@main/flse.min.js"></script>
-    <!-- <script src="http://localhost/flse.new.js"></script> -->
-</body>
-
-</html>

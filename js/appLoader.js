@@ -10,10 +10,14 @@ targetApp = new URL(window.location).searchParams.get("package");
 if (window["goTo"] != null || window["goTo"] != undefined) {
   targetApp = window["goTo"];
 }
-fetch(`${targetApp}`).then((response) => {
+fetch(`${targetApp}/manifest.json`).then((response) => {
   if (response.status == 200) {
     response.json().then((manifest) => {
-      // window.history.replaceState("", "", manifest["virtURI"]);
+      window.history.replaceState(
+        "",
+        "",
+        manifest["virtURI"] + window.location.search
+      );
       document.getElementsByClassName("app-splash")[0].innerHTML = `
             <div class="app-splash-inner">
                 <div class="app-splash-skel-icon">

@@ -29,13 +29,12 @@ const checkNetConnection = () => {
           response.json().then((data) => {
             if (data["error"] == "1") {
               networkConnection = true;
-              if (data["signal"] == "ratelimit")
-                [
-                  sendNotification(
-                    "Network Manager",
-                    "You are being ratelimited."
-                  ),
-                ];
+              if (data["signal"] == "ratelimit") {
+                // sendNotification(
+                //   "Network Manager",
+                //   "You are being ratelimited."
+                // );
+              }
               return;
             } else {
               networkConnection = false;

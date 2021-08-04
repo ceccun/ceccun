@@ -303,22 +303,7 @@ const openNotes = (noteNumber) => {
 
   var noteTypeElem = document.createElement("div");
   noteTypeElem.setAttribute("class", "write-new-note-screen current-screen");
-  var shortLan = settings["locale"].split("-")[0];
-  var longLan = settings["locale"].replace("-", "_");
-  var targetLan = "note-footer";
-  var footer = "";
-  if (flsestrings[targetLan]["default"] != null) {
-    footer = flsestrings[targetLan]["default"];
-  }
 
-  if (flsestrings[targetLan][longLan] != null) {
-    footer = flsestrings[targetLan][longLan];
-  }
-  if (shortLan != null) {
-    if (flsestrings[targetLan][shortLan] != null) {
-      footer = flsestrings[targetLan][shortLan];
-    }
-  }
   noteTypeElem.innerHTML = `
        <div class="screen-background"></div>
     <div class="popup">
@@ -342,7 +327,63 @@ const openNotes = (noteNumber) => {
             </div>
         </div>
         <div class="note-footer">
-          ${footer}
+          <div class="note-footer-add-button">
+                <img src="../images/new.svg" />
+                <trn>
+                    <div>
+                        <p>Add</p>
+                    </div>
+                    <div></div>
+                </trn>
+
+                <div style="transform: translateX(-20px)" class="note-footer-button-context">
+                  <p>Add New</p>
+                  <div onclick="addTextElem('title')" class="button">Title</div>
+                  <div class="button">Body</div>
+                  <div class="button">Checkmark</div>
+                  <div onclick="addTextElem('list')" class="button">List</div>
+                </div>
+            </div>
+
+            <div class="note-footer-image-button">
+                <img src="/images/image.svg" />
+                <trn>
+                    <div>
+                        <p>Media</p>
+                    </div>
+                    <div></div>
+                </trn>
+            </div>
+
+            <div class="note-footer-encrypt-button">
+                <img onclick="encryptNote()" src="/images/unlocked_holo.svg" />
+                <trn>
+                    <div>
+                        <p onclick="encryptNote()">Encryption</p>
+                    </div>
+                    <div></div>
+                </trn>
+
+                <div style="transform: translateX(-33px);" class="note-footer-button-context">
+                  <p>This note is not encrypted.</p>
+                  <div onclick="encryptNote()" class="button">Encrypt</div>
+                </div>
+            </div>
+
+            <div class="note-footer-delete-button">
+                <img onclick="deleteNote()" src="/images/delete.svg" />
+                <trn>
+                    <div>
+                        <p onclick="deleteNote()">Remove</p>
+                    </div>
+                    <div></div>
+                </trn>
+
+                <div style="transform: translateX(-60px)" class="note-footer-button-context">
+                  <p>Remove Note?</p>
+                  <div onclick="deleteNote(2)" class="button">Remove</div>
+                </div>
+            </div>
         </div>
     </div>`;
   document.body.appendChild(noteTypeElem);
