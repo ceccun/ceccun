@@ -62,8 +62,13 @@ const loadNotes = () => {
 
 const downloadNotesList = (batchNumber) => {
   const ls = window.localStorage;
+  const errorElem = `<div class="note-item-inner">
+                  <img style="display: inline-block; vertical-align: middle; height: 20px; filter: var(--invert-icon)" src='/images/alerttri.svg'/>
+                  <p style="display: inline-block; margin: 0 0 0 10px; vertical-align: middle;">This note is unavailable.</p>
+                  </div>`;
+
   if (batchNum["notes"] != "fin") {
-    fetch(`https://api.ceccun.com/api/v1/notes?batch=${batchNumber}`, {
+    fetch(`https://api.ceccun.com/api/v1/notes?batch=${batchNum["notes"]}`, {
       headers: {
         authorization: ls.getItem("token"),
       },
@@ -113,20 +118,39 @@ const downloadNotesList = (batchNumber) => {
             ).then((response) => {
               if (response.status == 200) {
                 response.json().then((data) => {
-                  var noteContents = data["content"]["preview"];
-                  if (noteContents.length >= 255) {
-                    noteContents = noteContents.substring(0, 255) + "...";
-                  }
-                  var newPElem = document.createElement("p");
-                  newPElem.setAttribute(
-                    "id",
-                    `notePreview_${notesListContents[item]}`
-                  );
-                  newPElem.innerText = noteContents;
+                  try {
+                    var noteContents = data["content"]["preview"];
+                    if (noteContents.length >= 255) {
+                      noteContents = noteContents.substring(0, 255) + "...";
+                    }
+                    var newPElem = document.createElement("p");
+                    newPElem.setAttribute(
+                      "id",
+                      `notePreview_${notesListContents[item]}`
+                    );
+                    newPElem.innerText = noteContents;
 
-                  var innerElem = document.createElement("div");
-                  innerElem.setAttribute("class", "note-item-inner");
-                  innerElem.appendChild(newPElem);
+                    var innerElem = document.createElement("div");
+                    innerElem.setAttribute("class", "note-item-inner");
+                    innerElem.appendChild(newPElem);
+                  } catch (error) {
+                    document.getElementById(
+                      `notePreviewDiv_${notesListContents[item]}`
+                    ).innerHTML = errorElem;
+                    document
+                      .getElementById(
+                        `notePreviewDiv_${notesListContents[item]}`
+                      )
+                      .setAttribute("class", "note-item selectable");
+                    document
+                      .getElementById(
+                        `notePreviewDiv_${notesListContents[item]}`
+                      )
+                      .setAttribute(
+                        "onclick",
+                        `openNotes("${notesListContents[item]}")`
+                      );
+                  }
 
                   try {
                     document.getElementById(
@@ -165,10 +189,7 @@ const downloadNotesList = (batchNumber) => {
               } else {
                 document.getElementById(
                   `notePreviewDiv_${notesListContents[item]}`
-                ).innerHTML = `<div class="note-item-inner">
-                  <img style="display: inline-block; vertical-align: middle; height: 20px; filter: var(--invert-icon)" src='/images/alerttri.svg'/>
-                  <p style="display: inline-block; margin: 0 0 0 10px; vertical-align: middle;">This note is unavailable.</p>
-                  </div>`;
+                ).innerHTML = errorElem;
                 document
                   .getElementById(`notePreviewDiv_${notesListContents[item]}`)
                   .setAttribute("class", "note-item selectable");
@@ -435,9 +456,14 @@ const openNotes = (noteNumber) => {
           .addEventListener("mousedown", noteBackIn);
       });
     } else {
-      document.getElementsByClassName(
-        "note-typing"
-      )[0].innerHTML = `<p style="text-align: center;">This note is unavailable</p><button style="text-align: center;" onclick="document.getElementsByClassName('current-screen')[0].remove(); window.history.pushState('','','?')">Close</button>`;
+      document.getElementsByClassName("note-typing")[0].innerHTML = `
+        <p style="text-align: center; margin-bottom: 10px;">This note is unavailable</p>
+        <button style="position: relative; left: 50%; transform: translateX(-50%);" onclick="document.getElementsByClassName('current-screen')[0].remove(); window.history.pushState('','','?')">Close</button>
+        <p style="text-align: center; margin-top: 10px;">Learn more: Why are notes unavailable?</p>
+      `;
+      document
+        .getElementsByClassName("note-typing")[0]
+        .setAttribute("contenteditable", "false");
     }
   });
 };
@@ -748,4 +774,206 @@ const getCaretPosition = (element) => {
     caretOffset = preCaretTextRange.text.length;
   }
   return caretOffset;
+};
+
+const swapSide = (side) => {
+  batchNum = { notes: 0, flashcards: 0 };
+  if (side == "fc") {
+    var currentSection = "flashcards";
+    document.getElementsByClassName(
+      "ls-notes"
+    )[0].innerHTML = `<div onclick="createDeck()" class='note-item selectable'>
+            <div class='note-item-inner'>
+                <div class="create-new-modal-container">
+                    <p>Create New</p>
+                    <img src="/images/new.svg" />
+                </div>
+            </div>
+        </div>
+        <div class="ls-notes-notes"></div>`;
+    downloadDecksList();
+  }
+  if (side == "nc") {
+    var currentSection = "notes";
+    document.getElementsByClassName(
+      "ls-notes"
+    )[0].innerHTML = `<div onclick="createDeck()" class='note-item selectable'>
+            <div class='note-item-inner'>
+                <div class="create-new-modal-container">
+                    <p>Create New</p>
+                    <img src="/images/new.svg" />
+                </div>
+            </div>
+        </div>
+        <div class="ls-notes-notes"></div>`;
+    loadNotes();
+  }
+};
+
+const downloadDecksList = (batchNumber) => {
+  const ls = window.localStorage;
+  const errorElem = `<div class="note-item-inner">
+                  <img style="display: inline-block; vertical-align: middle; height: 20px; filter: var(--invert-icon)" src='/images/alerttri.svg'/>
+                  <p style="display: inline-block; margin: 0 0 0 10px; vertical-align: middle;">This deck is unavailable.</p>
+                  </div>`;
+
+  if (batchNum["flashcards"] != "fin") {
+    fetch(
+      `https://api.ceccun.com/api/v1/flashcards?batch=${batchNum["flashcards"]}`,
+      {
+        headers: {
+          authorization: ls.getItem("token"),
+        },
+      }
+    ).then((response) => {
+      if (response.status == 200) {
+        response.json().then((notesList) => {
+          deckListContents = notesList["content"];
+          if (deckListContents.length == 10) {
+            batchNum["flashcards"] += 1;
+            console.log(batchNum);
+          } else {
+            batchNum["flashcards"] = "fin";
+            console.log(batchNum);
+          }
+
+          for (const item of deckListContents) {
+            console.log(item);
+            try {
+              document
+                .getElementsByClassName("loading-state")[0]
+                .setAttribute("id", `notePreviewDiv_${item}`);
+              document
+                .getElementsByClassName("loading-state")[0]
+                .setAttribute("class", "note-item");
+            } catch (error) {
+              var outerElem = document.createElement("div");
+              var inner = document.createElement("div");
+              inner.setAttribute("class", "note-item-inner");
+              inner.innerHTML = `<div class='skel' style='width: 40%; height: 30px; margin-bottom: 10px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 90%; height: 15px;'></div> <div class='skel' style='width: 20%; height: 15px;'></div>`;
+              outerElem.setAttribute("class", "note-item");
+              outerElem.setAttribute("id", `deckPreviewDiv_${item}`);
+              outerElem.appendChild(inner);
+              document
+                .getElementsByClassName("ls-notes-notes")[0]
+                .appendChild(outerElem);
+            }
+          }
+          var count = 0;
+          for (const item in deckListContents) {
+            fetch(
+              `https://api.ceccun.com/api/v1/flashcards/${deckListContents[item]}`,
+              {
+                headers: {
+                  authorization: ls.getItem("token"),
+                },
+              }
+            ).then((response) => {
+              if (response.status == 200) {
+                response.json().then((data) => {
+                  try {
+                    var noteContents = data["content"]["name"];
+                    if (noteContents.length >= 255) {
+                      noteContents = noteContents.substring(0, 255) + "...";
+                    }
+                    var newPElem = document.createElement("p");
+                    newPElem.setAttribute(
+                      "id",
+                      `deckPreview_${notesListContents[item]}`
+                    );
+                    newPElem.innerText = noteContents;
+
+                    var innerElem = document.createElement("div");
+                    innerElem.setAttribute("class", "note-item-inner");
+                    innerElem.appendChild(newPElem);
+                  } catch (error) {
+                    document.getElementById(
+                      `deckPreviewDiv_${notesListContents[item]}`
+                    ).innerHTML = errorElem;
+                    document
+                      .getElementById(
+                        `deckPreviewDiv_${notesListContents[item]}`
+                      )
+                      .setAttribute("class", "note-item selectable");
+                    document
+                      .getElementById(
+                        `deckPreviewDiv_${notesListContents[item]}`
+                      )
+                      .setAttribute(
+                        "onclick",
+                        `openDeck("${notesListContents[item]}")`
+                      );
+                  }
+
+                  try {
+                    document.getElementById(
+                      `deckPreviewDiv_${notesListContents[item]}`
+                    ).innerHTML = "";
+                    document
+                      .getElementById(
+                        `deckPreviewDiv_${notesListContents[item]}`
+                      )
+                      .appendChild(innerElem);
+                    document
+                      .getElementById(
+                        `deckPreviewDiv_${notesListContents[item]}`
+                      )
+                      .setAttribute(
+                        "onclick",
+                        `openDeck("${notesListContents[item]}")`
+                      );
+                    document
+                      .getElementById(
+                        `deckPreviewDiv_${notesListContents[item]}`
+                      )
+                      .setAttribute("class", "note-item selectable");
+                  } catch (error) {
+                    document
+                      .getElementsByClassName("ls-notes-notes")[0]
+                      .appendChild(
+                        createPreview(
+                          notesListContents[item],
+                          data["content"]["preview"]
+                        )
+                      );
+                  }
+                  count += 1;
+                });
+              } else {
+                document.getElementById(
+                  `deckPreviewDiv_${notesListContents[item]}`
+                ).innerHTML = errorElem;
+                document
+                  .getElementById(`deckPreviewDiv_${notesListContents[item]}`)
+                  .setAttribute("class", "note-item selectable");
+                document
+                  .getElementById(`deckPreviewDiv_${notesListContents[item]}`)
+                  .setAttribute(
+                    "onclick",
+                    `openDeck("${notesListContents[item]}")`
+                  );
+              }
+            });
+          }
+
+          var countDetector = setInterval(() => {
+            if (count == notesListContents.length) {
+              if (batchNum["notes"] != "fin") {
+                var newSkel = document.createElement("skelNote");
+                var stateItems =
+                  document.getElementsByClassName("loading-state");
+                for (const item of stateItems) {
+                  item.setAttribute("class", "note-item");
+                }
+                document
+                  .getElementsByClassName("ls-notes-notes")[0]
+                  .appendChild(newSkel);
+              }
+              clearInterval(countDetector);
+            }
+          }, 100);
+        });
+      }
+    });
+  }
 };
