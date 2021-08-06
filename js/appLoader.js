@@ -2,6 +2,7 @@ var imageBlob = {};
 var packMan = {
   name: "Ceccun Web Manager",
   version: "1",
+  stamp: "tempInstall.WEBMGR",
 };
 
 checkNetConnection();

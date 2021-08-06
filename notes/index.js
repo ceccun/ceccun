@@ -808,6 +808,19 @@ const swapSide = (side) => {
         <div class="ls-notes-notes"></div>`;
     loadNotes();
   }
+  if (side == "ac") {
+    var currentSection = "about";
+    document.getElementsByClassName("ls-notes")[0].innerHTML = `
+    <div style="border: 0; text-align: center;" class="note-item">
+      <div class="note-item-inner">
+        <h2>Ceccun Notes</h2>
+        <p>Your cloud note-taking app.</p>
+        <p flsestring="copyright"></p>
+        <p>Installed By: ${packMan["stamp"]}</p>
+      </div>
+    </div>
+    `;
+  }
 };
 
 const downloadDecksList = (batchNumber) => {
