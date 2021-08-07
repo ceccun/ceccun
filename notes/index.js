@@ -875,7 +875,7 @@ const downloadDecksList = (batchNumber) => {
           var count = 0;
           for (const item in deckListContents) {
             fetch(
-              `https://api.ceccun.com/api/v1/flashcards/${deckListContents[item]}`,
+              `https://api.ceccun.com/api/v1/flashcards/${deckListContents[item]}/details`,
               {
                 headers: {
                   authorization: ls.getItem("token"),
@@ -885,14 +885,14 @@ const downloadDecksList = (batchNumber) => {
               if (response.status == 200) {
                 response.json().then((data) => {
                   try {
-                    var noteContents = data["content"]["name"];
+                    var noteContents = `${data["content"]["name"]} (${data["content"]["length"]})`;
                     if (noteContents.length >= 255) {
                       noteContents = noteContents.substring(0, 255) + "...";
                     }
                     var newPElem = document.createElement("p");
                     newPElem.setAttribute(
                       "id",
-                      `deckPreview_${notesListContents[item]}`
+                      `deckPreview_${deckListContents[item]}`
                     );
                     newPElem.innerText = noteContents;
 
@@ -901,43 +901,43 @@ const downloadDecksList = (batchNumber) => {
                     innerElem.appendChild(newPElem);
                   } catch (error) {
                     document.getElementById(
-                      `deckPreviewDiv_${notesListContents[item]}`
+                      `deckPreviewDiv_${deckListContents[item]}`
                     ).innerHTML = errorElem;
                     document
                       .getElementById(
-                        `deckPreviewDiv_${notesListContents[item]}`
+                        `deckPreviewDiv_${deckListContents[item]}`
                       )
                       .setAttribute("class", "note-item selectable");
                     document
                       .getElementById(
-                        `deckPreviewDiv_${notesListContents[item]}`
+                        `deckPreviewDiv_${deckListContents[item]}`
                       )
                       .setAttribute(
                         "onclick",
-                        `openDeck("${notesListContents[item]}")`
+                        `openDeck("${deckListContents[item]}")`
                       );
                   }
 
                   try {
                     document.getElementById(
-                      `deckPreviewDiv_${notesListContents[item]}`
+                      `deckPreviewDiv_${deckListContents[item]}`
                     ).innerHTML = "";
                     document
                       .getElementById(
-                        `deckPreviewDiv_${notesListContents[item]}`
+                        `deckPreviewDiv_${deckListContents[item]}`
                       )
                       .appendChild(innerElem);
                     document
                       .getElementById(
-                        `deckPreviewDiv_${notesListContents[item]}`
+                        `deckPreviewDiv_${deckListContents[item]}`
                       )
                       .setAttribute(
                         "onclick",
-                        `openDeck("${notesListContents[item]}")`
+                        `openDeck("${deckListContents[item]}")`
                       );
                     document
                       .getElementById(
-                        `deckPreviewDiv_${notesListContents[item]}`
+                        `deckPreviewDiv_${deckListContents[item]}`
                       )
                       .setAttribute("class", "note-item selectable");
                   } catch (error) {
@@ -945,7 +945,7 @@ const downloadDecksList = (batchNumber) => {
                       .getElementsByClassName("ls-notes-notes")[0]
                       .appendChild(
                         createPreview(
-                          notesListContents[item],
+                          deckListContents[item],
                           data["content"]["preview"]
                         )
                       );
@@ -954,16 +954,16 @@ const downloadDecksList = (batchNumber) => {
                 });
               } else {
                 document.getElementById(
-                  `deckPreviewDiv_${notesListContents[item]}`
+                  `deckPreviewDiv_${deckListContents[item]}`
                 ).innerHTML = errorElem;
                 document
-                  .getElementById(`deckPreviewDiv_${notesListContents[item]}`)
+                  .getElementById(`deckPreviewDiv_${deckListContents[item]}`)
                   .setAttribute("class", "note-item selectable");
                 document
-                  .getElementById(`deckPreviewDiv_${notesListContents[item]}`)
+                  .getElementById(`deckPreviewDiv_${deckListContents[item]}`)
                   .setAttribute(
                     "onclick",
-                    `openDeck("${notesListContents[item]}")`
+                    `openDeck("${deckListContents[item]}")`
                   );
               }
             });
@@ -989,4 +989,43 @@ const downloadDecksList = (batchNumber) => {
       }
     });
   }
+};
+
+const openDeck = (deckNumber) => {
+  const ls = window.localStorage;
+  window.history.pushState("", "", `?deckId=${deckNumber}`);
+
+  var deckTypeElem = document.createElement("div");
+  deckTypeElem.setAttribute("class", "write-new-note-screen current-screen");
+
+  deckTypeElem.innerHTML = `
+       <div class="screen-background"></div>
+    <div class="popup">
+        <div class="new-note-header">
+            <div onclick="document.getElementsByClassName('current-screen')[0].remove()">
+                <img src="/images/chevron.svg" />
+                <trn>
+                    <div>
+                        <p>Close Deck</p>
+                    </div>
+                    <div></div>
+                </trn>
+            </div>
+        </div>
+        <div style="margin: 20px">
+
+          <div class='skel' style='width: 40%; height: 30px; margin-bottom: 10px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 90%; height: 15px;'></div> <div class='skel' style='width: 20%; height: 15px;'></div>
+
+        </div>
+    </div>`;
+
+  document.body.appendChild(deckTypeElem);
+
+  document
+    .getElementsByClassName("screen-background")[0]
+    .addEventListener("click", () => {
+      document.getElementsByClassName("current-screen")[0].remove();
+    });
+
+  document.getElementsByClassName("");
 };
