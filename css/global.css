@@ -128,13 +128,13 @@ trn {
   border-radius: 5px;
   margin-bottom: 5px;
   background-color: var(--skel-color);
-  /* background: linear-gradient(
+  background: linear-gradient(
     270deg,
-    var(--skel-color) 25%,
+    var(--skel-color) 45%,
     var(--body-color) 50%,
-    var(--skel-color) 75%
-  ); */
-  animation: skelLite 1s linear infinite;
+    var(--skel-color) 55%
+  );
+  animation: skel 1s ease infinite;
   background-size: 300% 300%;
 }
 

@@ -108,6 +108,7 @@ const downloadNotesList = (batchNumber) => {
           }
           var count = 0;
           for (const item in notesListContents) {
+            setTimeout(() => {
             fetch(
               `https://api.ceccun.com/api/v1/notes/${notesListContents[item]}`,
               {
@@ -201,6 +202,7 @@ const downloadNotesList = (batchNumber) => {
                   );
               }
             });
+          }, 1000)
           }
 
           var countDetector = setInterval(() => {
@@ -220,6 +222,8 @@ const downloadNotesList = (batchNumber) => {
             }
           }, 100);
         });
+      } else {
+        window.location.href = "/screens/login.html"
       }
     });
   }
