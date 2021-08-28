@@ -504,6 +504,35 @@ body {
   .write-new-note-screen > .popup > .note-footer {
     width: 100%;
   }
+  .card-preview {
+    border: solid 2px var(--app-color-borders);
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    width: 50%;
+    height: 100px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 40px;
+    display: flex;
+  }
+  .card-preview p {
+    width: 100%;
+    align-self: center;
+  }
+  .deck-central-btn {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .deck-central-btn div {
+    width: 100%;
+    padding: 10px;
+    border: solid 2px var(--app-color-borders);
+    border-radius: 10px;
+    text-align: center;
+  }
 }
 
 .note-item-inner {
@@ -547,3 +576,4 @@ body {
   align-self: center;
   margin: 0 0 0 10px;
 }
+

@@ -39,11 +39,51 @@ const entry = () => {
         showApp();
         loadNotes();
         var noteID = new URL(window.location).searchParams.get("noteId");
+        var deckID = new URL(window.location).searchParams.get("deckId");
         if (noteID != null || noteID != undefined) {
           openNotes(noteID);
         }
+        if (deckID != null || deckID != undefined) {
+          openDeck(deckID);
+        }
+
+
+        var deckTypeElem = document.createElement("div");
+        deckTypeElem.setAttribute("class", "write-new-note-screen current-screen");
+        // document.body.style.overflowY = "hidden";
+        deckTypeElem.innerHTML = `
+            <div class="screen-background"></div>
+          <div class="popup" style="overflow: auto;">
+              <div style="margin: 20px">
+                <h2 style="margin-top: 30px; text-align: center;">Welcome to Ceccun Notes!</h2>
+                <p style="text-align: left;">Howdy friend and welcome to Ceccun Notes. Bear in mind, that this version of Notes is an early-access build meaning it contains bugs, glitches and probably isn't even finished. To make it easy for you to keep track, we'll just make a list of everything that works:</p>
+                <ul>
+                  <li>Note saving</li>
+                  <li>Note encryption (works, but not finished)</li>
+                  <li>Note deletion</li>
+                  <li>Note Markdown preview (very unstable)</li>
+                  <li>Deck previews</li>
+                </ul>
+                <p>We hope you have fun and enjoy using our product. (〃＾▽＾〃)</p>
+
+                <button onclick="document.getElementsByClassName('current-screen')[0].remove()" style="border: solid 2px rgb(27, 46, 121); background-color: rgb(31, 76, 255); color: white; appearance: none; position: relative; left: 50%; transform: translateX(-50%); padding: 10px; border-radius: 5px;">Get Started</button>
+              </div>
+          </div>`;
+
+        document.body.appendChild(deckTypeElem);
+
+        document
+          .getElementsByClassName("screen-background")[0]
+          .addEventListener("click", () => {
+            document.getElementsByClassName("current-screen")[0].remove();
+            // document.body.style.overflowY = "auto";
+          });
+
+
+
       });
     } else {
+
     }
   });
 };
@@ -108,7 +148,6 @@ const downloadNotesList = (batchNumber) => {
           }
           var count = 0;
           for (const item in notesListContents) {
-            setTimeout(() => {
             fetch(
               `https://api.ceccun.com/api/v1/notes/${notesListContents[item]}`,
               {
@@ -202,7 +241,6 @@ const downloadNotesList = (batchNumber) => {
                   );
               }
             });
-          }, 1000)
           }
 
           var countDetector = setInterval(() => {
@@ -1001,7 +1039,7 @@ const openDeck = (deckNumber) => {
 
   var deckTypeElem = document.createElement("div");
   deckTypeElem.setAttribute("class", "write-new-note-screen current-screen");
-
+  // document.body.style.overflowY = "hidden";
   deckTypeElem.innerHTML = `
        <div class="screen-background"></div>
     <div class="popup">
@@ -1016,9 +1054,27 @@ const openDeck = (deckNumber) => {
                 </trn>
             </div>
         </div>
-        <div style="margin: 20px">
+        <div class="deck-body" style="margin: 20px">
 
-          <div class='skel' style='width: 40%; height: 30px; margin-bottom: 10px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 100%; height: 15px;'></div> <div class='skel' style='width: 90%; height: 15px;'></div> <div class='skel' style='width: 20%; height: 15px;'></div>
+        <div class="main-ctn-skel">
+          <div class='skel' style='width: 60%; height: 150px; margin-bottom: 40px; position: relative; left: 50%; transform: translateX(-50%)'></div>
+          <div class='skel' style='width: 40%; height: 40px; margin-bottom: 30px;'></div>
+          <div style="display: flex; justify-content: space-between; gap: 25px;">
+            <div class='skel' style='width: 100%; height: 20px; margin-bottom: 30px;'></div>
+            <div class='skel' style='width: 100%; height: 20px; margin-bottom: 30px;'></div>
+            <div class='skel' style='width: 100%; height: 20px; margin-bottom: 30px;'></div>
+          </div>
+          <div class='skel' style='width: 40%; height: 20px; margin-bottom: 10px; margin-right: 5px; display: inline-block;'></div>
+          <div class='skel' style='width: 20px; height: 20px; margin-bottom: 10px; display: inline-block; animation: none;'></div>
+
+          <div class='skel' style='width: 100%; height: 15px;'></div>
+          <div class='skel' style='width: 90%; height: 15px;'></div>
+          <div class='skel' style='width: 85%; height: 15px;'></div>
+          <div class='skel' style='width: 90%; height: 15px;'></div>
+          <div class='skel' style='width: 98%; height: 15px;'></div>
+          <div class='skel' style='width: 67%; height: 15px;'></div>
+          <div class='skel' style='width: 23%; height: 15px;'></div>
+        </div>
 
         </div>
     </div>`;
@@ -1029,7 +1085,49 @@ const openDeck = (deckNumber) => {
     .getElementsByClassName("screen-background")[0]
     .addEventListener("click", () => {
       document.getElementsByClassName("current-screen")[0].remove();
+      // document.body.style.overflowY = "auto";
     });
 
-  document.getElementsByClassName("");
+  fetch(`https://api.ceccun.com/api/v1/flashcards/${deckNumber}/details`, {
+    headers: {
+      "authorization": ls.getItem("token")
+    }
+  }).then((response) => {
+    if (response.status == 200) {
+      response.json().then((data) => {
+        data = data.content;
+        const hostDiv = document.createElement('div');
+        hostDiv.className = "card-home"
+        const card = document.createElement('div');
+        card.className = "card-preview"
+        var cardsub = "cards";
+        if (data.length == 1) {
+          cardsub = "card";
+        }
+        card.innerHTML = `<p>${data.length} <a flsestring="${cardsub}"></a></p>`;
+        hostDiv.appendChild(card);
+
+        var title = document.createElement("h2");
+        title.innerText = data.name;
+
+        hostDiv.appendChild(title);
+
+        var centralbtns = document.createElement('div');
+        centralbtns.className = "deck-central-btn";
+
+        centralbtns.innerHTML = `
+        <div flsestring="edit">Edit</div>
+        <div flsestring="revise">Revise</div>
+        <div flsestring="test">Test</div>
+        `
+
+        hostDiv.appendChild(centralbtns);
+
+        document.getElementsByClassName("main-ctn-skel")[0].remove();
+        document.getElementsByClassName("deck-body")[0].appendChild(hostDiv);
+      })
+    }
+  });
+
+  swapSide("fc");
 };
