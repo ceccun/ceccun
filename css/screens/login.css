@@ -7,8 +7,8 @@ body {
   width: 100%;
   height: 100vh;
   margin: 0;
-  background-color: black;
-  /* background-image: url(https://source.unsplash.com/user/erondu/1600x900); */
+  /* background-color: black; */
+  background-image: url(https://source.unsplash.com/nature/1600x900); 
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
