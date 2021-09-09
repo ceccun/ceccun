@@ -23,7 +23,7 @@ fetch(`${targetApp}/manifest.json`).then((response) => {
             <div class="app-splash-inner">
                 <div class="app-splash-skel-icon">
                     <img style="width: 70px; max-width: 50vw; z-index: -1; display: block; filter: var(--invert-icon);" src="${manifest["icon"]}" />
-                    <img class="loading-spinner" style="width: 30px; margin-top: 50px; filter: var(--invert-icon);" src="/images/loading-thick-small.png" />
+                    <img class="loading-spinner" style="width: 30px; margin-top: 50px; filter: var(--invert-icon);" src="/images/loading-thin-normal.png" />
                 </div>
             </div>
             `;

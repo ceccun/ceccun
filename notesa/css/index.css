@@ -1,0 +1,173 @@
+:root {
+  --main-app: #dadada;
+  --main-app-dark: #e1e1e1;
+  --main-app-define: #d4d5d5;
+  --icons-inv: invert(0);
+  --red: rgb(255, 65, 65);
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div {
+  margin: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --main-app: #252525;
+    --main-app-dark: #1e1e1e;
+    --main-app-define: #2b2a2a;
+    --icons-inv: invert();
+  }
+}
+
+@media only screen and (max-width: 728px) {
+  .nativeHeaderInner,
+  .contentArea {
+    margin-right: 5%;
+    margin-left: 5%;
+  }
+  .nativeHeaderBtn > p {
+    display: none;
+  }
+  .noteGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media only screen and (min-width: 729px) {
+  .nativeHeaderInner {
+    position: relative;
+    margin-right: 20%;
+    margin-left: 20%;
+  }
+
+  .contentArea {
+    margin-left: 20%;
+    margin-right: 20%;
+  }
+
+  .noteGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    transform: scale(1);
+    opacity: 1;
+
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .noteItem {
+    max-width: 50%;
+    display: inline-block;
+    min-width: 150px;
+    width: 15%;
+    transition: transform 0.3s ease, opacity 0.2s ease;
+  }
+  .noteGrid:active > .noteItem {
+    opacity: 0.6;
+    /* transform: scale(0.9); */
+  }
+
+  .noteItem:active {
+    transform: scale(1.1) !important;
+    opacity: 1 !important;
+    z-index: 2;
+  }
+}
+
+body {
+  background-color: var(--main-app);
+  margin: 0;
+  padding: 0;
+}
+
+.nativeHeader {
+  background-color: var(--main-app-dark);
+  /* height: 30px; */
+  padding-top: 30px;
+  padding-bottom: 10px;
+  border-bottom: solid 1px var(--main-app-define);
+}
+
+.nativeHeaderInner {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nativeHeaderBtn {
+  padding: 10px;
+  background-color: var(--main-app);
+  border-radius: 25px;
+  border: solid 1px var(--main-app-define);
+}
+
+.nativeHeaderBtn > * {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0;
+  user-select: none;
+}
+
+.contentArea {
+  padding-top: 30px;
+}
+
+.nativeHeaderBtn > p {
+  margin-left: 10px;
+}
+
+.nativeHeaderBtn:hover {
+}
+
+.nativeHeaderBtn > img {
+  height: 20px;
+  filter: var(--icons-inv);
+}
+
+.encrypted-toolt {
+  user-select: none;
+}
+
+.encrypted-toolt > * {
+  filter: var(--icons-inv);
+  color: black;
+  display: inline-block;
+  vertical-align: top;
+  opacity: 0.5;
+}
+
+.encrypted-toolt img {
+  height: 20px;
+}
+
+.noteItem {
+  background-color: var(--red);
+  padding: 20px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  --filter-note-item: invert();
+}
+.noteGrid {
+  margin-bottom: 15px;
+}
+.noteIcons {
+  display: flex;
+  justify-content: start;
+  height: 17px;
+  margin-top: 20px;
+  filter: var(--filter-note-item);
+  user-select: none;
+  gap: 5px;
+}

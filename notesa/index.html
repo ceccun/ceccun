@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ceccun Notes</title>
+
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+    <div class="nativeHeader">
+        <div class="nativeHeaderInner">
+
+            <div id="main-left">
+                <div class="nativeHeaderBtn">
+                    <img src="images/new.svg" />
+                    <trn>
+                        <div><p>Add New</p></div>
+                    </trn>
+                </div>
+                
+            </div>
+
+            <div id="main-middle">
+                <h2>Notes</h2>
+            </div>
+
+            <div id="main-right">
+                <div class="nativeHeaderBtn">
+                    <img src="images/flashcards.svg" />
+                    <trn>
+                        <div>
+                            <p>Flashcards</p>
+                        </div>
+                    </trn>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="contentArea">
+        <div class="noteGrid">
+            <div class="noteItem">
+                <div class="notePreview">
+                    This is a handcrafted new standard sized note created on the new Ceccun Notes.
+                </div>
+                <div class="noteIcons">
+                    <img src="images/locked.svg" />
+                </div>
+            </div>
+
+            <div class="noteItem">
+                <div class="notePreview">
+                    This is a handcrafted new standard sized note created on the new Ceccun Notes.
+                </div>
+                <div class="noteIcons">
+                    <img src="images/unlocked.svg"/>
+                    <img src="/images/loading-thick-small.png" class="loading-spinner"/>
+                </div>
+            </div>
+
+            <div style="background-color: rgb(48, 179, 48);" class="noteItem">
+                <div class="notePreview">
+                    This is a handcrafted new standard sized note created on the new Ceccun Notes.
+                </div>  
+                <div class="noteIcons">
+                    <img src="images/locked.svg" />
+                </div>
+            </div>
+
+            <div style="background-color: rgb(20, 142, 212);" class="noteItem">
+                <div class="notePreview">
+                    This is a handcrafted new standard sized note created on the new Ceccun Notes.
+                </div>
+                <div class="noteIcons">
+                    <img src="images/locked.svg" />
+                </div>
+            </div>
+
+            <div style="background-color: rgb(240, 47, 175);" class="noteItem">
+                <div class="notePreview">
+                    This is a handcrafted new standard sized note created on the new Ceccun Notes.
+                </div>
+                <div class="noteIcons">
+                    <img src="images/locked.svg" />
+                </div>
+            </div>
+
+            <div style="background-color: rgb(3, 192, 113);" class="noteItem">
+                <div class="notePreview">
+                    This is a handcrafted new standard sized note created on the new Ceccun Notes.
+                </div>
+                <div class="noteIcons">
+                    <img src="images/locked.svg" />
+                </div>
+            </div>
+
+            <div style="background-color: rgb(0, 0, 0);" class="noteItem">
+                <div class="notePreview">
+                    This is a handcrafted new standard sized note created on the new Ceccun Notes.
+                </div>
+                <div class="noteIcons">
+                    <img src="images/locked.svg" />
+                </div>
+            </div>
+        </div>
+
+        <div class="encrypted-toolt">
+            <img src="images/locked.svg" />
+            <p>Encrypted</p>
+        </div>
+    </div>
+
+    <flseimport src="/js/modules/trainerBlocks.js" name="trn" type="module" />
+    <script src="/js/pickVer.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/stel-la/flse@main/flse.min.js"></script>
+    <script>
+        pickVer('/notesa');
+    </script>
+</body>
+</html>
