@@ -1,0 +1,20 @@
+[
+  {
+    "name": "note",
+    "label": "notes",
+    "entry": "/dash-scripts/notes.js",
+    "icon": "/images/notes.svg"
+  },
+  {
+    "name": "deck",
+    "label": "deck",
+    "entry": "/dash-scripts/deck.js",
+    "icon": "/images/flashcards.svg"
+  },
+  {
+    "name": "clock",
+    "label": "clock",
+    "entry": "/dash-scripts/clock.js",
+    "icon": "/images/clock.svg"
+  }
+]
