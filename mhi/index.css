@@ -1,0 +1,47 @@
+.hero {
+    border-radius: 8px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    text-align: center;
+    background: #396afc;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2948ff, #396afc);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2948ff, #396afc); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    margin-top: 20px;
+    color: white !important;
+    margin-bottom: 20px;
+}
+
+.hero * {
+    color: white !important;
+}
+
+
+.flex-caro > div {
+    border-bottom: solid 1px var(--app-color-modals);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.flex-caro {
+    margin-bottom: 25px !important;
+}
+
+
+@media only screen and (min-width: 768px) {
+    .flex-caro {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .flex-caro > div {
+        border-radius: 10px;
+        border: solid 2px #1e3c72;
+        padding: 2px;
+        width: 100%;
+        transition: border 0.2s ease;
+    }
+    .flex-caro > div:hover {
+        border: solid 2px #FFFFFF;
+    }
+}

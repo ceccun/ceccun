@@ -1,0 +1,10 @@
+<head>
+    <title>Connecting to app...</title>
+    <meta content="Ceccun Mental Health" property="og:title" />
+    <meta content="Your cloud note-taking platform." property="og:description" />
+    <meta content="https://ceccun.com/mhi/" property="og:url" />
+    <script>
+        const params = window.location.search.replace("?","&");
+        window.location.replace(`/app.html?package=mhi${params}`);
+    </script>
+</head>

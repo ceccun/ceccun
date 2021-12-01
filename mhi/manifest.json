@@ -1,0 +1,21 @@
+{
+    "name": "Mental Health Support",
+    "package": "com.ceccun.mhi",
+    "entryPoint": "/mhi/index.js",
+    "icon": "/mhi/heart-1.svg",
+    "virtURI": "/mhi/",
+    "flse": [{
+        "name": "trn",
+        "src": "/js/modules/trainerBlocks.js",
+        "type": "module"
+    },
+    {
+        "name": "header",
+        "src": "/js/modules/header.js",
+        "type": "module"
+    },
+    {
+        "src": "notesskel.json",
+        "type": "components"
+    }]
+}
