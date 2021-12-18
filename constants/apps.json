@@ -9,8 +9,8 @@
   {
     "name": "deck",
     "label": "deck",
-    "entry": "/dash-scripts/deck.js",
-    "icon": "/images/flashcards.svg"
+    "entry": "https://ceccun.com/dash-scripts/deck.js",
+    "icon": "https://ceccun.com/images/flashcards.svg"
   },
   {
     "name": "clock",
