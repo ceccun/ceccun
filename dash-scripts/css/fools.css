@@ -1,0 +1,14 @@
+.hero-freeUpG {
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    background: #bc4e9c;
+    background: -webkit-linear-gradient(to bottom, #f80759, #bc4e9c);
+    background: linear-gradient(to bottom, #f80759, #bc4e9c);
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.hero-freeUpG * {
+    color: white;
+}

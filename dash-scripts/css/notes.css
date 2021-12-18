@@ -1,0 +1,43 @@
+.notesListItem {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 3px;
+    user-select: none;   
+}
+
+
+.notesListItem > .skel {
+    display: none;
+}
+
+.noteListGhost > .skel {
+    display: block;
+    height: 15px;
+}
+
+.notesListItem > p {
+    margin: 0;
+}
+
+.noteListGhost:hover, .noteListGhost:active {
+    background-color: var(--body-color) !important;
+}
+
+@media only screen and (min-width: 768px) {
+    .notesListItem:hover {
+        background-color: var(--button-color-gray-hov);
+    }
+}
+
+
+@media only screen and (max-width: 768px) {
+    .notesListItem:active {
+        background-color: var(--button-color-gray-hov);
+    }
+    .notesListItem {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+}

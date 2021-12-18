@@ -94,12 +94,29 @@ body {
 }
 
 .dashBarLeftItem:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--button-color-gray-hov);
   cursor: pointer;
+}
+
+.inactive {
+  opacity: 0.5;
+  user-select: none;
+  pointer-events: none;
 }
 
 .dashBarLeftItem > img {
   height: 20px;
+  filter: var(--invert-icon);
+}
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-color: var(--button-color-gray);
+  padding: 10px;
+  border: 0;
+  -webkit-appearance: none;
 }
 
 .dashBarLeftItem-active {
@@ -128,7 +145,7 @@ body {
 
 .dashBarLeftItem-active > * {
   filter: invert(57%) sepia(49%) saturate(2904%) hue-rotate(194deg)
-    brightness(99%) contrast(104%);
+    brightness(99%) contrast(104%) !important;
 }
 
 .qDash {
@@ -167,11 +184,13 @@ body {
     padding: 50px;
   }
   .lBar {
+    box-sizing: border-box;
     width: 30%;
     height: 100%;
     min-width: 440px;
-    border-radius: 17px;
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    /* border-radius: 17px; */
+    /* box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2); */
     overflow: auto;
   }
 
@@ -208,9 +227,19 @@ body {
     padding-right: 30px;
   }
 
+  .dashBarLeftItem {
+    scroll-snap-align: end;
+    scroll-snap-type: mandatory;
+  }
+
   .workspace {
     height: calc(var(--v-height) - 110px);
     overflow-y: auto;
+  }
+
+  .lBar {
+    box-sizing: border-box;
+    padding: 20px;
   }
 
   @keyframes workspaceSwitch {

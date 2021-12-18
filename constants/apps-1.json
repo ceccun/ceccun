@@ -3,8 +3,7 @@
     "name": "note",
     "label": "notes",
     "entry": "/dash-scripts/notes.js",
-    "icon": "/images/notes.svg",
-    "stylesheet": "/dash-scripts/css/notes.css"
+    "icon": "/images/notes.svg"
   },
   {
     "name": "deck",
@@ -19,9 +18,9 @@
     "icon": "/images/clock.svg"
   },
   {
-    "name": "𝕚𝕟𝕛𝕖𝕔𝕥𝕖𝕕",
-    "label": "Development debug tools",
-    "entry": "/inject.js",
-    "icon": "/images/unlocked_holo.svg"
+    "name": "passwd",
+    "label": "passwords",
+    "entry": "/dash-scripts/passwords.js",
+    "icon": "/images/key.svg"
   }
 ]

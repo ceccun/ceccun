@@ -5,6 +5,11 @@ let current = {
   appVars: {},
 };
 
+let experiments = {
+  "chinaRealNameAuthentication": false,
+  "aprilFools": true
+}
+
 setInterval(() => {
   document.getElementById("changableStyle").innerHTML = `
   :root {
@@ -23,81 +28,134 @@ function startUp() {
       });
     }
   });
+}
 
-  function setupAppList() {
-    let awarenessVars = {
-      max: appList.length,
-      current: 0,
-    };
-    appList.forEach((item) => {
-      const entry = item.entry;
-      fetch(entry).then((response) => {
-        if (response.status == 200) {
-          response.text().then((script) => {
-            item["script"] = Function(script);
-            awarenessVars.current += 1;
-            if (awarenessVars.current == awarenessVars.max) {
-              setupAppButtons();
-            }
-          });
-        }
-      });
-    });
+
+function setupAppList() {
+  let awarenessVars = {
+    max: appList.length,
+    current: 0,
+  };
+
+  if (experiments.aprilFools == true) {
+    appList.push({
+      "name": "aprilFools-freePerks",
+      "label": "Free upgrades",
+      "icon": "/images/up_arrow.svg",
+      "entry": "/dash-scripts/fools.js",
+      "stylesheet": "/dash-scripts/css/fools.css"
+    })
   }
 
-  function setupAppButtons() {
-    appList.forEach((item, index) => {
-      let button = document.createElement("div");
-      button.className = "dashBarLeftItem";
-      button.setAttribute("data-appName", item.name);
-      button.setAttribute("onclick", `launch(${index})`);
 
-      let img = document.createElement("img");
-      img.src = item.icon;
+  appList.forEach((item) => {
+    const entry = item.entry;
 
-      let label = document.createElement("p");
-      label.setAttribute("flsestring", item.label);
+    // fetch(entry).then((response) => {
+    //   if (response.status == 200) {
+    //     response.text().then((script) => {
+    //       item["script"] = Function(script);
+    //       awarenessVars.current += 1;
+    //       if (awarenessVars.current == awarenessVars.max) {
+    //         setupAppButtons();
+    //       }
+    //     });
+    //   }
+    // });
 
-      button.appendChild(img);
-      button.appendChild(label);
+  });
 
-      document
-        .getElementsByClassName("dashBarLeftItems")[0]
-        .appendChild(button);
-    });
+  setupAppButtons();
+}
 
-    // <div class="dashBarLeftItem dashBarLeftItem-active">
-    //   <img src="/images/notes.svg" />
-    //   <p>Notes</p>
-    // </div>;
+function setupAppButtons() {
+  appList.forEach((item, index) => {
+    let button = document.createElement("div");
+    button.className = "dashBarLeftItem";
+    button.setAttribute("data-appName", item.name);
+    button.setAttribute("onclick", `launch(${index})`);
 
-    // let appButtons = document.getElementsByClassName("dashBarLeftItem");
-    // for (const item of appButtons) {
-    //   item.addEventListener("click", launch);
-    // }
+    let img = document.createElement("img");
+    img.src = item.icon;
 
-    if (current.app == null) {
-      launch(0);
-    }
+    let label = document.createElement("p");
+    label.setAttribute("flsestring", item.label);
+    label.innerText = item.label;
+
+    button.appendChild(img);
+    button.appendChild(label);
+
+    document
+      .getElementsByClassName("dashBarLeftItems")[0]
+      .appendChild(button);
+  });
+
+  if (current.app == null) {
+    launch(0);
   }
 }
 
+
 function launch(app) {
+  document.getElementById("currentWorkspaceStyle").innerHTML = ``;
   let active = document.getElementsByClassName("dashBarLeftItem-active");
   if (active.length != 0) {
     active[0].className = "dashBarLeftItem";
   }
+  document.getElementsByClassName("dashBarLeft")[0].className = "dashBarLeft inactive"
 
-  let newCurrentApp = document.getElementsByClassName("dashBarLeftItem")[app];
-  newCurrentApp.className = "dashBarLeftItem dashBarLeftItem-active";
+  if (appList[app]["script"] == undefined) {
+    fetch(appList[app].entry).then((response) => {
+      if (response.status == 200) {
+        response.text().then((script) => {
+          appList[app]["script"] = Function("workspace", "created", script);
+          document.getElementsByClassName("dashBarLeft")[0].className = "dashBarLeft"
+          if (appList[app]["stylesheet"] != undefined) {
+            fetch(appList[app]["stylesheet"]).then((response) => {
+              response.text().then((data) => {
+                appList[app]["stylesheet"] = data;
+                document.getElementById("currentWorkspaceStyle").innerHTML = appList[app]["stylesheet"];
+                launchAndRun()
+              })
+            });
+          } else {
+            launchAndRun()
+          }
+        });
+      }
+    });
+  } else {
+    if (appList[app]["stylesheet"] != undefined) {
+          document.getElementById("currentWorkspaceStyle").innerHTML = appList[app]["stylesheet"];
+    }
+    launchAndRun()
+    document.getElementsByClassName("dashBarLeft")[0].className = "dashBarLeft";
+  }
 
-  appList[app]["script"]();
+  function launchAndRun() {
+    let newCurrentApp = document.getElementsByClassName("dashBarLeftItem")[app];
+    newCurrentApp.className = "dashBarLeftItem dashBarLeftItem-active";
+
+    var workspaceName = `${appList[app].name}-workspace`;
+    var workspace = document.getElementsByClassName(workspaceName)[0];
+
+    if (workspace == null) {
+      workspace = document.createElement("div");
+      workspace.className = `${workspaceName} workspace-active`;
+      document.getElementsByClassName("workspace")[0].appendChild(workspace);
+      appList[app]["script"](workspace, 1);
+    } else {
+      appList[app]["script"](workspace, 0); 
+    }
+
+    document.getElementsByClassName("workspace-active")[0].className = document
+    .getElementsByClassName("workspace-active")[0]
+    .className.replace("workspace-active", "");
+
+    document.getElementsByClassName(
+      workspaceName
+    )[0].className = `${workspaceName} workspace-active`;
+  }
 }
-
-function notes() {}
-
-function deck() {}
-
-function clock() {}
 
 startUp();
