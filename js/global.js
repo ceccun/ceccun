@@ -3,7 +3,7 @@ var notification = 0;
 
 var date = new Date();
 flsestrings["copyright"] = {
-  default: `© Ceccun ${date.getUTCFullYear().toString()} `,
+  default: `© Ceccun ${date.getFullYear().toString()} `,
 };
 flsestrings["nointernet"] = {
   default: "No Internet Connection.",
