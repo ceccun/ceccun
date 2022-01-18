@@ -99,9 +99,18 @@ body {
 }
 
 .inactive {
-  opacity: 0.5;
+  animation: inactive 0.3s ease forwards;
   user-select: none;
   pointer-events: none;
+}
+
+@keyframes inactive {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.4;
+  }
 }
 
 .dashBarLeftItem > img {
@@ -188,7 +197,6 @@ input {
     width: 30%;
     height: 100%;
     min-width: 440px;
-    padding: 20px;
     /* border-radius: 17px; */
     /* box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2); */
     overflow: auto;

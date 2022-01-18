@@ -2,7 +2,7 @@
     "name": "Notes",
     "package": "com.ceccun.notes",
     "entryPoint": "index.js",
-    "icon": "images/notes.svg",
+    "icon": "/images/notes.svg",
     "virtURI": "/notes/",
     "flse": [{
         "name": "trn",

@@ -3,6 +3,8 @@ let appList;
 let current = {
   app: null,
   appVars: {},
+  width: 0,
+  height: 0
 };
 
 let experiments = {
@@ -11,12 +13,21 @@ let experiments = {
 }
 
 setInterval(() => {
-  document.getElementById("changableStyle").innerHTML = `
+  const heightCondition = current.height != window.innerHeight;
+  const widthCondition = current.width != window.innerWidth;
+
+  const conditions = heightCondition || widthCondition;
+  if (conditions) {
+    current.width = window.innerWidth;
+    current.height = window.innerHeight;
+
+    document.getElementById("changableStyle").innerHTML = `
   :root {
-    --v-height: ${window.innerHeight}px;
-    --v-width: ${window.innerWidth}px;
+    --v-height: ${current.height}px;
+    --v-width: ${current.width}px;
   }
   `;
+  }
 }, 100);
 
 function startUp() {

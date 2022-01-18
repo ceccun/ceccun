@@ -1,5 +1,5 @@
 var batch = 0;
-
+var createdNoteScreen = false;
 
 if (created == 1) {
   var ls = document.createElement("div");
@@ -36,6 +36,9 @@ function loadNotes() {
           containerItem.className = "notesListItem noteListGhost";
           containerItem.id = `NOTES${item}-nor`;
           
+          containerItem.addEventListener("click", (e) => {
+            openNote(item);
+          })
 
           var ghostItem = document.createElement("div");
           ghostItem.className = "skel"
@@ -74,4 +77,11 @@ function loadNotes() {
       });
     }
   });
+}
+
+
+function openNote(noteId) {
+  if (createdNoteScreen == false) {
+    var noteScreen = document.createElement("div");
+  }
 }

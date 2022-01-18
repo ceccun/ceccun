@@ -29,6 +29,9 @@
     .notesListItem:hover {
         background-color: var(--button-color-gray-hov);
     }
+    .notesListItem:active {
+        background-color: var(--button-color-gray);
+    }
 }
 
 
