@@ -10,14 +10,35 @@
 </head>
 <body>
     
-    <div class="app">
-        <p>We're working so hard we couldn't even style this page properly.</p>
-        <ul>
-            <li><a href="https://github.com/ceccun/flse">FLSE</a></li>
-            <li><a href="/notes">Ceccun Notes</a> (Alpha and deprecated)</li>
-        </ul>
+    <div class="pane-page">
+        <div class="pane">
+            <noscript>
+                <div class="warning">
+                    <p>Javascript is not supported or disabled in the browser you're using.</p>
+                </div>
+            </noscript>
+
+            <div class="header">
+                <div><img src="/images/logo-15.svg" class="logo"></div>
+                <div></div>
+                <div></div>
+            </div>
+            
+            <div class="slideshow">
+                <noscript>
+                    <img src="/images/promo/ceccun-nojs.svg" class="slideshow-image">
+                </noscript>
+                <img src="" class="slideshow-image" id="slideshow-image">
+
+                <div class="slideshow-dots">
+                    
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/gh/stel-la/flse@main/flse.min.js"></script>
+    <script src="/js/index.js"></script>
 </body>
 </html>

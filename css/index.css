@@ -1,15 +1,5 @@
-/* skels */
-.hero-skel {
+.slideshow-image {
+  display: block;
   width: 100%;
-  border-radius: 5px;
-}
-@media only screen and (max-width: 769px) {
-  .hero-skel {
-    height: 60vw;
-  }
-}
-@media only screen and (min-width: 769px) {
-  .hero-skel {
-    height: 30vw;
-  }
+  border-radius: 10px;
 }

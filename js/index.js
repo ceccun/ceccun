@@ -1,3 +1,11 @@
-document.getElementsByClassName("nojs-message")[0].remove();
+const bigimages = [
+    `/images/promo/flse/FLSE-${settings.longLan.split("_")[0]}.svg`
+]
 
-try { setupEnvironment(); } catch(error) { errHandler(error); }
+const setupSlideshow = () => {
+    const imageViewer = document.getElementById("slideshow-image");
+
+    imageViewer.src = bigimages[0];
+}
+
+setupSlideshow();
