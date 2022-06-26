@@ -1,0 +1,179 @@
+body {
+    background-color: var(--modal-background);
+}
+
+.modal-backdrop {
+    width: 100%;
+    height: 100vh;
+}
+
+.modal-top-controls {
+    display: flex;
+    justify-content: space-between;
+    height: 36px;
+    margin-bottom: 5px;
+}
+
+.modal-bottom-controls {
+    display: flex;
+    justify-content: space-between;
+    height: 36px;
+    margin-top: 5px;
+}
+
+.l-space {
+    display: flex;
+    justify-content: end;
+}
+
+.r-space {
+    display: flex;
+    justify-content: start;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    gap: 7px;
+    background-color: var(--modal-color);
+    height: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 17px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: var(--button-color-gray-hov);
+}
+
+.button > img {
+    align-self: center;
+    height: 12px;
+    filter: var(--invert-icon);
+}
+.button > p {
+    align-self: center;
+    margin:0;
+}
+
+.modal-main {
+    background-color: var(--modal-color);
+    height: calc(100% - (36px + 5px));
+    width: 100%;
+    border-radius: 12px;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    justify-content: end;
+}
+
+.modal-main input {
+    width: 100%;
+    background-color: var(--modal-background);
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.alert-box {
+    background-color: rgba(255,0,0,0.1);
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-top: 10px;
+    border: solid 2px rgb(255, 90, 90);
+}
+
+.alert-box p, .alert-box h4 {
+    padding: 0;
+    margin: 0;
+}
+
+.current {
+    min-width: 100%;
+    animation: slideFromLeft 0.5s cubic-bezier(.77,0,.01,1)
+}
+
+.outgoing {
+    min-width: 100%;
+    animation: slideToLeft 0.5s cubic-bezier(.77,0,.01,1) forwards;
+}
+
+@keyframes slideFromLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(calc(100% + 20px));
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0%);
+        
+    }
+}
+
+@keyframes slideToLeft {
+    0% {
+        opacity: 1;
+        transform: translateX(100%);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(calc(0% - 20px));
+    }
+}
+
+.controls-hidden {
+    opacity: 0;
+}
+
+.controls-shown {
+    animation: controlsShow 0.5s cubic-bezier(.77,0,.01,1) forwards;
+}
+
+@keyframes controlsShow {
+    0% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0px);
+        
+    }
+}
+
+@media only screen and (min-width: 728px) {
+    @media only screen and (min-height: 512px) {
+        .modal {
+            width: 450px;
+            height: 535px;
+            min-height: 450px;
+            max-height: calc(100vh - 20px);
+            position: absolute;
+            top: 50%;
+            box-sizing: border-box;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+    @media only screen and (max-height: 512px) {
+        .modal {
+            width: 450px;
+            height: 535px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            position: absolute;
+            box-sizing: border-box;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+}
