@@ -4,7 +4,7 @@ var globalFlows = {
         js: () => {},
         html: `
         <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-            <img class="loading-spinner" src="/images/loading-thick-small.png">
+            <img class="loading-spinner" style="filter: var(--invert-icon);" src="/images/loading-thick-small.png">
         </div>
         `,
         css: ` 
@@ -57,6 +57,8 @@ function goTo(number) {
     } else {
         document.getElementById(currentFlow).className = "current"
     }
+
+    globalFlows[currentFlow].js();
 }
 
 function bootstrap() {
@@ -71,43 +73,93 @@ function bootstrap() {
     modalMain.appendChild(style)
 }
 
+function endCheckFetchModals(cb) {
+    if (Object.keys(globalFlows).length > 1) {
+        cb()
+    } else {
+        endCheckFetchModals(cb);
+    }
+}
+
 async function fetchModals(url, cb) {
     await fetch(`/modals/${url}/index.js`).then(async(response) => {
         if (response.status == 200) {
             await response.text().then(async(data) => {
                 const involvedScript = new Function('', data);
 
-                await (involvedScript()).forEach(async(item, index) => {
+                (involvedScript()).forEach((item, index) => {
 
-                    await fetch(`/modals/${url}/js/${item}`).then(async(response) => {
-                        if (response.status == 200) {
-                            await response.text().then(async(itemJs) => {
-                                const itemExecutable = new Function('', itemJs);
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", `/modals/${url}/js/${item}`, true);
 
-                                const available = await itemExecutable();
+                    xhr.onload = async function (e) {
+                        if (xhr.readyState === 4) {
+                          if (xhr.status === 200) {
+                            const itemJs = xhr.responseText;
 
-                                globalFlows[item] = {};
-                                await available.forEach(async(JSItem, index) => {
-                                    if (JSItem.name == "getLayout") {
-                                        globalFlows[item]["html"] = await JSItem();
-                                    }
-                                    if (JSItem.name == "getStyles") {
-                                        globalFlows[item]["css"] = await JSItem();
-                                    }
-                                    if (JSItem.name == "exec") {
-                                        globalFlows[item]["js"] = JSItem;
-                                    }
-                                })
+                            const itemExecutable = new Function('', itemJs);
 
+                            const available = await itemExecutable();
 
+                            globalFlows[item] = {};
+
+                            available.forEach(async(JSItem, index) => {
+                                if (JSItem.name == "getLayout") {
+                                    globalFlows[item]["html"] = await JSItem();
+                                }
+                                if (JSItem.name == "getStyles") {
+                                    globalFlows[item]["css"] = await JSItem();
+                                }
+                                if (JSItem.name == "exec") {
+                                    globalFlows[item]["js"] = JSItem;
+                                }
                             })
+
+                          } else {
+                            console.error(xhr.statusText);
+                          }
                         }
-                    })
+                    };
+
+                    xhr.send()
+
+                    // await fetch(`/modals/${url}/js/${item}`).then(async(response) => {
+                    //     if (response.status == 200) {
+                    //         await response.text().then(async(itemJs) => {
+                    //             const itemExecutable = new Function('', itemJs);
+
+                    //             const available = await itemExecutable();
+
+                    //             globalFlows[item] = {};
+                    //             await available.forEach(async(JSItem, index) => {
+                    //                 if (JSItem.name == "getLayout") {
+                    //                     globalFlows[item]["html"] = await JSItem();
+                    //                 }
+                    //                 if (JSItem.name == "getStyles") {
+                    //                     globalFlows[item]["css"] = await JSItem();
+                    //                 }
+                    //                 if (JSItem.name == "exec") {
+                    //                     globalFlows[item]["js"] = JSItem;
+                    //                 }
+                    //             })
+
+
+                    //         })
+                    //     }
+                    // })
                 })
+
+                const timeFrame = setInterval(check, 1000)
+        
+                function check() {
+                    console.log(Object.keys(globalFlows).length, (involvedScript()).length + 1)
+                    if (Object.keys(globalFlows).length == ((involvedScript()).length + 1)) {
+                        cb()
+                        clearInterval(timeFrame)
+                    }
+                }
             })
         }
-
-        cb()
     })
 }
 
