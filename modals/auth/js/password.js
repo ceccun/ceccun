@@ -26,7 +26,7 @@ async function exec() {
 
 function backBtn() {
     unloadEvent();
-    goTo(1);
+    goTo(1, false);
 }
 
 function nextBtn() {

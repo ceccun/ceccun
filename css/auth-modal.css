@@ -99,10 +99,16 @@ body {
     margin: 0;
 }
 
-.current {
+.current-left {
     order: 2;
     min-width: 100%;
     animation: slideFromLeft 0.5s cubic-bezier(.77,0,.01,1)
+}
+
+.current {
+    order: 2;
+    min-width: 100%;
+    animation: slideFromRight 0.5s cubic-bezier(.77,0,.01,1)
 }
 
 .outgoing {
@@ -111,7 +117,25 @@ body {
     animation: slideToLeft 0.5s cubic-bezier(.77,0,.01,1) forwards;
 }
 
+.outgoing-right {
+    order: 1;
+    min-width: 100%;
+    animation: slideToRight 0.5s cubic-bezier(.77,0,.01,1) forwards;
+}
+
 @keyframes slideFromLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(calc(-100% - 20px));
+    }
+    
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }  
+}
+
+@keyframes slideFromRight {
     0% {
         opacity: 0;
         transform: translateX(calc(100% + 20px));
@@ -135,6 +159,19 @@ body {
         transform: translateX(calc(0% - 20px));
     }
 }
+
+@keyframes slideToRight {
+    0% {
+        opacity: 1;
+        transform: translateX(100%);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(calc(200% + 20px));
+    }
+}
+
 
 .controls-hidden {
     opacity: 0;

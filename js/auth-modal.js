@@ -39,23 +39,32 @@ async function main() {
     })
 }
 
-function goTo(number) {
+function goTo(number, forwards = true) {
     const flows = Object.keys(globalFlows);
     console.log(flows);
     const currentFlow = flows[number];
     try{
-        document.getElementsByClassName("current")[0].className = "outgoing";
+        if (forwards) {
+            try { document.getElementsByClassName("current")[0].className = "outgoing"; } catch(err) {}
+            document.getElementsByClassName("current-left")[0].className = "outgoing";
+        } else {
+            try { document.getElementsByClassName("current")[0].className = "outgoing-right"; } catch(err) {}
+            document.getElementsByClassName("current-left")[0].className = "outgoing-right";
+        }
     }catch(err){}
 
     if (!document.getElementById(currentFlow)) {
         const element = document.createElement("div");
-        element.className = "current";
+        if (forwards) element.className = "current" 
+        else element.className = "current-left" 
         element.id = currentFlow;
         element.innerHTML = globalFlows[currentFlow].html;
     
         modalMain.appendChild(element);
     } else {
-        document.getElementById(currentFlow).className = "current"
+        const element = document.getElementById(currentFlow);
+        if (forwards) element.className = "current" 
+        else element.className = "current-left" 
     }
 
     globalFlows[currentFlow].js();
