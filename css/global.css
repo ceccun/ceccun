@@ -117,7 +117,7 @@ trn {
 }
 
 .loading-spinner {
-  animation: spinning 0.7s linear infinite;
+  animation: spinning 3s linear infinite;
 }
 
 @keyframes spinning {
