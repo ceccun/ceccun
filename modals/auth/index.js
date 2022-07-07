@@ -1,4 +1,5 @@
 return [
     "email.js",
-    "password.js"
+    "password.js",
+    "passwordmgr.js"
 ]

@@ -75,7 +75,7 @@ const entry = () => {
         document
           .getElementsByClassName("screen-background")[0]
           .addEventListener("click", () => {
-            document.getElementsByClassName("current-screen")[0].remove();
+            document.getElementsByClassName("current-screen")[document.getElementsByClassName("current-screen").length - 1].remove();
             // document.body.style.overflowY = "auto";
           });
 

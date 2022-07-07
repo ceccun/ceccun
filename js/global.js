@@ -1,5 +1,30 @@
 var flsestrings = {};
 var notification = 0;
+var extAvail = [
+  'ar3',
+  'ar4',
+  'ar6'
+]
+
+var inAvail = [
+  'ar1',
+  'ar2',
+  'ar4'
+]
+
+var localStorage = window.localStorage;
+if (localStorage.getItem("inFavour") == null) {
+  localStorage.setItem("inFavour", getRandomInt(0, inAvail.length - 1));
+}
+if (localStorage.getItem("extFavour") == null) {
+  localStorage.setItem("extFavour", getRandomInt(0, extAvail.length - 1));
+}
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 var date = new Date();
 flsestrings["copyright"] = {
@@ -105,3 +130,4 @@ const sendNotification = (appName, content, timeout = 5000) => {
     }, 400);
   }, timeout);
 };
+

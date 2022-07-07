@@ -1,8 +1,8 @@
 async function getLayout() {
-    let response = await fetch('/modals/auth/html/password.html');
-    let passwordLayout = await response.text();
+    let response = await fetch('/modals/auth/html/passwordmgr.html');
+    let passwordmgrLayout = await response.text();
 
-    return passwordLayout
+    return passwordmgrLayout
 }
 
 async function getStyles() {
@@ -25,6 +25,7 @@ async function exec() {
 }
 
 function backBtn() {
+    globalVariable["autofill"] = false;
     unloadEvent();
     goTo(1, false);
 }
@@ -32,24 +33,6 @@ function backBtn() {
 function nextBtn() {
     unloadEvent();
     goTo(0);
-    const ls = window.localStorage;
-    const extServer = extAvail[ls.getItem("extFavour")];
-    fetch(`https://${extServer}.ceccun.com/api/v4/login`, {
-        method: 'POST',
-        body: {
-            email: document.getElementById("emailbox").value,
-            password: document.getElementById("email2box").value
-        }
-    }).then(res => {
-        if (res.status == 403) {
-            goTo(1);
-        }
-        if (res.status == 200) {
-            res.json().then((tokenBody) => {
-                globalVariable["authenticate"](tokenBody.token)
-            })
-        }
-    })
 }
 
 function unloadEvent() {
