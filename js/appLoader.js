@@ -35,7 +35,7 @@ fetch(`${targetApp}/manifest.json`).then((response) => {
     document.getElementsByClassName("app-splash")[0].innerHTML = `
             <div class="app-splash-inner">
                 <div class="app-splash-skel-icon">
-                    <img style="width: 70px; max-width: 50vw; z-index: -1; display: block; margin: auto;" src="/images/cloud-off.svg" />
+                    <img style="width: 70px; max-width: 50vw; z-index: -1; display: block; margin: auto;" src="/images/no-img.svg" />
                     <h1>Woops</h1>
                     <p>Something went wrong!</p>
                 </div>
